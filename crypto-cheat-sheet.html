@@ -1,0 +1,3693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crypto Cheat Sheet</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #181b24;
+    --surface-alt: #1e2230;
+    --border: #2a2e3d;
+    --text: #e4e6ee;
+    --text-dim: #8b8fa3;
+    --sig-accent: #6ee7b7;
+    --sig-bg: rgba(110, 231, 183, 0.06);
+    --sig-border: rgba(110, 231, 183, 0.18);
+    --mac-accent: #f9a8d4;
+    --mac-bg: rgba(249, 168, 212, 0.06);
+    --mac-border: rgba(249, 168, 212, 0.18);
+    --vs-color: #fbbf24;
+  }
+
+  /* Navigation */
+  .nav-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(15, 17, 23, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.65rem 0;
+    margin: -2rem -1.25rem 2rem;
+    width: calc(100% + 2.5rem);
+  }
+
+  .nav-inner {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 1.25rem;
+  }
+
+  .nav-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    margin-bottom: 0.45rem;
+  }
+
+  .nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .nav-links a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    font-weight: 600;
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 0.25rem 0.55rem;
+    border-radius: 5px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+
+  .nav-links a:hover {
+    color: var(--text);
+    border-color: rgba(255,255,255,0.2);
+    background: var(--surface-alt);
+  }
+
+  .section-anchor {
+    scroll-margin-top: 80px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    padding: 2rem 1.25rem;
+  }
+
+  .sheet {
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .header h1 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 0.35rem;
+  }
+
+  .header h1 .sig { color: var(--sig-accent); }
+  .header h1 .vs { color: var(--vs-color); font-size: 1rem; margin: 0 0.3rem; }
+  .header h1 .mac { color: var(--mac-accent); }
+
+  .header p {
+    color: var(--text-dim);
+    font-size: 0.82rem;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Side by side cards */
+  .compare-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .card {
+    border-radius: 12px;
+    padding: 1.35rem 1.25rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+  }
+
+  .card.sig {
+    background: var(--sig-bg);
+    border: 1px solid var(--sig-border);
+  }
+  .card.sig::before { background: var(--sig-accent); }
+
+  .card.mac {
+    background: var(--mac-bg);
+    border: 1px solid var(--mac-border);
+  }
+  .card.mac::before { background: var(--mac-accent); }
+
+  .card-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 0.85rem;
+  }
+
+  .card.sig .card-label { color: var(--sig-accent); }
+  .card.mac .card-label { color: var(--mac-accent); }
+
+  .card-icon {
+    font-size: 1.6rem;
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+
+  .card-title {
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .card-desc {
+    color: var(--text-dim);
+    font-size: 0.82rem;
+    line-height: 1.55;
+  }
+
+  .card-desc strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  /* Properties grid */
+  .props-section {
+    margin-top: 1.5rem;
+  }
+
+  .section-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.8px;
+    color: var(--text-dim);
+    margin-bottom: 1rem;
+    padding-left: 0.25rem;
+  }
+
+  .prop-row {
+    display: grid;
+    grid-template-columns: 140px 1fr 1fr;
+    gap: 0;
+    margin-bottom: 2px;
+    font-size: 0.82rem;
+  }
+
+  .prop-label {
+    background: var(--surface-alt);
+    padding: 0.7rem 0.85rem;
+    font-weight: 600;
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    border-right: 1px solid var(--border);
+  }
+
+  .prop-row:first-child .prop-label { border-radius: 8px 0 0 0; }
+  .prop-row:last-child .prop-label { border-radius: 0 0 0 8px; }
+
+  .prop-val {
+    padding: 0.7rem 0.85rem;
+    line-height: 1.5;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .prop-val.sig-col {
+    background: var(--sig-bg);
+    border-bottom: 1px solid rgba(110,231,183,0.07);
+  }
+  .prop-val.mac-col {
+    background: var(--mac-bg);
+    border-bottom: 1px solid rgba(249,168,212,0.07);
+  }
+
+  .prop-row:first-child .prop-val.sig-col { border-radius: 0 8px 0 0; }
+  .prop-row:first-child .prop-val.mac-col { border-radius: 0 8px 0 0; }
+  .prop-row:last-child .prop-val.sig-col { border-radius: 0 0 8px 0; }
+  .prop-row:last-child .prop-val.mac-col { border-radius: 0 0 8px 0; }
+
+  .tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .tag.green { background: rgba(110,231,183,0.15); color: var(--sig-accent); }
+  .tag.pink { background: rgba(249,168,212,0.15); color: var(--mac-accent); }
+  .tag.yellow { background: rgba(251,191,36,0.12); color: #fbbf24; }
+  .tag.neutral { background: rgba(139,143,163,0.15); color: var(--text-dim); }
+
+  /* Analogy section */
+  .analogy-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .analogy-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+  }
+
+  .analogy-card .emoji {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .analogy-card h3 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.5px;
+  }
+
+  .analogy-card.sig-a h3 { color: var(--sig-accent); }
+  .analogy-card.mac-a h3 { color: var(--mac-accent); }
+
+  .analogy-card p {
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    line-height: 1.55;
+  }
+
+  /* Mnemonic bar */
+  .mnemonic {
+    margin-top: 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.35rem;
+    text-align: center;
+  }
+
+  .mnemonic .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--vs-color);
+    margin-bottom: 0.65rem;
+  }
+
+  .mnemonic .content {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    line-height: 1.8;
+    color: var(--text);
+  }
+
+  .mnemonic .content .hl-g { color: var(--sig-accent); font-weight: 700; }
+  .mnemonic .content .hl-p { color: var(--mac-accent); font-weight: 700; }
+
+  /* Privacy Section */
+  .divider {
+    margin: 2.5rem 0 2rem;
+    border: none;
+    border-top: 1px solid var(--border);
+    position: relative;
+  }
+
+  .divider-label {
+    position: absolute;
+    top: -0.6rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg);
+    padding: 0 1rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+  }
+
+  .privacy-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .privacy-header h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #93c5fd;
+  }
+
+  .privacy-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .privacy-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.1rem 1.15rem;
+    transition: border-color 0.2s;
+  }
+
+  .privacy-card:hover {
+    border-color: rgba(147, 197, 253, 0.3);
+  }
+
+  .privacy-card .p-icon {
+    font-size: 1.3rem;
+    margin-bottom: 0.4rem;
+    display: block;
+  }
+
+  .privacy-card .p-type {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #93c5fd;
+    margin-bottom: 0.35rem;
+  }
+
+  .privacy-card .p-def {
+    color: var(--text);
+    font-size: 0.8rem;
+    line-height: 1.5;
+    margin-bottom: 0.4rem;
+  }
+
+  .privacy-card .p-example {
+    color: var(--text-dim);
+    font-size: 0.75rem;
+    line-height: 1.5;
+    padding-left: 0.6rem;
+    border-left: 2px solid rgba(147, 197, 253, 0.2);
+  }
+
+  @media (max-width: 700px) {
+    .privacy-grid { grid-template-columns: 1fr; }
+    .privacy-card.full-width { max-width: 100%; }
+  }
+
+  /* Secure Printing Section */
+  .print-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .print-header h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #c4b5fd;
+  }
+
+  .print-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .print-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.1rem 1.15rem;
+    transition: border-color 0.2s;
+  }
+
+  .print-card:hover {
+    border-color: rgba(196, 181, 253, 0.3);
+  }
+
+  .print-card.full-width {
+    grid-column: 1 / -1;
+    max-width: 50%;
+    justify-self: center;
+  }
+
+  .print-card .pr-icon {
+    font-size: 1.3rem;
+    margin-bottom: 0.4rem;
+    display: block;
+  }
+
+  .print-card .pr-type {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #c4b5fd;
+    margin-bottom: 0.35rem;
+  }
+
+  .print-card .pr-def {
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 700px) {
+    .print-grid { grid-template-columns: 1fr; }
+    .print-card.full-width { max-width: 100%; }
+  }
+
+  /* Vernam Cipher Section */
+  .vernam-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .vernam-header h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fcd34d;
+  }
+
+  .vernam-header p {
+    color: var(--text-dim);
+    font-size: 0.78rem;
+    margin-top: 0.2rem;
+  }
+
+  .vernam-how {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.35rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .vernam-how .v-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #fcd34d;
+    margin-bottom: 0.7rem;
+  }
+
+  .vernam-how .v-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .vernam-how .v-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--text);
+  }
+
+  .vernam-how .v-step .step-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #fcd34d;
+    background: rgba(252, 211, 77, 0.1);
+    border-radius: 4px;
+    padding: 0.15rem 0.45rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .vernam-example {
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    margin-bottom: 0.75rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    line-height: 2;
+    text-align: center;
+    color: var(--text-dim);
+  }
+
+  .vernam-example .ex-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-dim);
+    margin-bottom: 0.5rem;
+  }
+
+  .vernam-example .ex-row span.hl {
+    color: #fcd34d;
+    font-weight: 600;
+  }
+
+  .vernam-example .ex-row span.res {
+    color: var(--sig-accent);
+    font-weight: 600;
+  }
+
+  .vernam-perfect {
+    background: rgba(110, 231, 183, 0.05);
+    border: 1px solid rgba(110, 231, 183, 0.15);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .vernam-perfect .vp-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--sig-accent);
+    margin-bottom: 0.4rem;
+  }
+
+  .vernam-perfect .vp-text {
+    font-size: 0.82rem;
+    color: var(--text);
+    line-height: 1.55;
+  }
+
+  .vernam-limits-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.8px;
+    color: var(--text-dim);
+    margin-bottom: 0.75rem;
+    padding-left: 0.25rem;
+  }
+
+  .vernam-limits {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .vlimit-card {
+    background: rgba(248, 113, 113, 0.05);
+    border: 1px solid rgba(248, 113, 113, 0.15);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+  }
+
+  .vlimit-card .vl-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #f87171;
+    margin-bottom: 0.3rem;
+  }
+
+  .vlimit-card .vl-text {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  @media (max-width: 700px) {
+    .vernam-limits { grid-template-columns: 1fr; }
+  }
+
+  /* CPS Robustness Section */
+  .cps-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .cps-header h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #67e8f9;
+  }
+
+  .cps-header p {
+    color: var(--text-dim);
+    font-size: 0.78rem;
+    margin-top: 0.2rem;
+  }
+
+  .cps-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .cps-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    display: grid;
+    grid-template-columns: 2.8rem 1fr;
+    gap: 0.85rem;
+    align-items: start;
+    transition: border-color 0.2s;
+  }
+
+  .cps-card:hover {
+    border-color: rgba(103, 232, 249, 0.3);
+  }
+
+  .cps-card .cps-icon {
+    font-size: 1.4rem;
+    margin-top: 0.1rem;
+  }
+
+  .cps-card .cps-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #67e8f9;
+    margin-bottom: 0.15rem;
+  }
+
+  .cps-card .cps-formula {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: #fcd34d;
+    background: rgba(252, 211, 77, 0.08);
+    display: inline-block;
+    padding: 0.12rem 0.5rem;
+    border-radius: 4px;
+    margin-bottom: 0.35rem;
+  }
+
+  .cps-card .cps-def {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    line-height: 1.55;
+  }
+
+  .cps-card .cps-def strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  @media (max-width: 700px) {
+    .cps-card { grid-template-columns: 1fr; }
+  }
+
+  /* Diffie-Hellman Section */
+  .dh-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .dh-header h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fdba74;
+  }
+
+  .dh-header p {
+    color: var(--text-dim);
+    font-size: 0.78rem;
+    margin-top: 0.2rem;
+  }
+
+  .dh-setup {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    margin-bottom: 0.75rem;
+    text-align: center;
+  }
+
+  .dh-setup .dh-setup-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-dim);
+    margin-bottom: 0.5rem;
+  }
+
+  .dh-setup .dh-setup-text {
+    font-size: 0.82rem;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .dh-setup .dh-setup-text .pub {
+    font-family: 'JetBrains Mono', monospace;
+    color: #fdba74;
+    font-weight: 600;
+  }
+
+  .dh-flow {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0;
+    margin-bottom: 0.75rem;
+  }
+
+  .dh-person {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .dh-person-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-align: center;
+    padding: 0.5rem;
+    border-radius: 8px 8px 0 0;
+  }
+
+  .dh-person.alice .dh-person-label {
+    color: var(--sig-accent);
+    background: rgba(110, 231, 183, 0.08);
+  }
+
+  .dh-person.bob .dh-person-label {
+    color: #93c5fd;
+    background: rgba(147, 197, 253, 0.08);
+  }
+
+  .dh-step {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.8rem 0.9rem;
+  }
+
+  .dh-step .step-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.3rem;
+  }
+
+  .dh-person.alice .dh-step .step-tag { color: var(--sig-accent); }
+  .dh-person.bob .dh-step .step-tag { color: #93c5fd; }
+
+  .dh-step .step-text {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  .dh-step .step-text strong {
+    color: var(--text);
+  }
+
+  .dh-step .step-formula {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: #fdba74;
+    background: rgba(253, 186, 116, 0.08);
+    padding: 0.2rem 0.55rem;
+    border-radius: 4px;
+    display: inline-block;
+    margin-top: 0.35rem;
+  }
+
+  .dh-arrows {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 2.5rem 0.8rem 0;
+  }
+
+  .dh-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    gap: 0.15rem;
+  }
+
+  .dh-arrow .arrow-line {
+    font-size: 1.2rem;
+    color: #fdba74;
+  }
+
+  .dh-result {
+    background: rgba(253, 186, 116, 0.06);
+    border: 1px solid rgba(253, 186, 116, 0.18);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    text-align: center;
+    margin-bottom: 0.75rem;
+  }
+
+  .dh-result .dh-res-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #fdba74;
+    margin-bottom: 0.4rem;
+  }
+
+  .dh-result .dh-res-text {
+    font-size: 0.82rem;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .dh-result .dh-res-text .formula {
+    font-family: 'JetBrains Mono', monospace;
+    color: #fdba74;
+    font-weight: 600;
+  }
+
+  .dh-note {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.85rem 1.1rem;
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    line-height: 1.55;
+    text-align: center;
+  }
+
+  .dh-note strong { color: var(--text); font-weight: 600; }
+
+  @media (max-width: 700px) {
+    .dh-flow { grid-template-columns: 1fr; }
+    .dh-arrows {
+      flex-direction: row;
+      padding: 0.5rem 0;
+    }
+  }
+
+  /* Bluetooth Section */
+  .bt-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .bt-header h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #60a5fa;
+  }
+
+  .bt-header p {
+    color: var(--text-dim);
+    font-size: 0.78rem;
+    margin-top: 0.2rem;
+  }
+
+  .bt-phase {
+    margin-bottom: 0.75rem;
+  }
+
+  .bt-phase-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.8px;
+    color: var(--text-dim);
+    margin-bottom: 0.6rem;
+    padding-left: 0.25rem;
+  }
+
+  .bt-flow {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.2rem 1.3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .bt-flow-step {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.7rem;
+    align-items: start;
+  }
+
+  .bt-flow-step .bt-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #60a5fa;
+    background: rgba(96, 165, 250, 0.1);
+    border-radius: 4px;
+    padding: 0.15rem 0.45rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .bt-flow-step .bt-text {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    line-height: 1.55;
+  }
+
+  .bt-flow-step .bt-text strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .bt-flow-step .bt-text .bt-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #60a5fa;
+    background: rgba(96, 165, 250, 0.08);
+    padding: 0.1rem 0.45rem;
+    border-radius: 4px;
+    display: inline-block;
+  }
+
+  .bt-flow-step .bt-text .bt-sends {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: #fdba74;
+    font-weight: 600;
+  }
+
+  .bt-divider {
+    border: none;
+    border-top: 1px dashed rgba(96, 165, 250, 0.15);
+    margin: 0.1rem 0;
+  }
+
+  .bt-result {
+    background: rgba(96, 165, 250, 0.06);
+    border: 1px solid rgba(96, 165, 250, 0.18);
+    border-radius: 10px;
+    padding: 0.85rem 1.1rem;
+    font-size: 0.82rem;
+    color: var(--text);
+    line-height: 1.55;
+    text-align: center;
+  }
+
+  .bt-result .bt-res-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #60a5fa;
+    margin-bottom: 0.35rem;
+  }
+
+  .bt-result .bt-formula {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: #60a5fa;
+    font-weight: 600;
+  }
+
+  /* Bluetooth Init Key Section */
+  .bt-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .bt-header h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #60a5fa;
+  }
+
+  .bt-header p {
+    color: var(--text-dim);
+    font-size: 0.78rem;
+    margin-top: 0.2rem;
+  }
+
+  .bt-phase-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.8px;
+    color: var(--text-dim);
+    margin-bottom: 0.75rem;
+    padding-left: 0.25rem;
+  }
+
+  .bt-flow {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0;
+    margin-bottom: 1.5rem;
+  }
+
+  .bt-device {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .bt-device-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-align: center;
+    padding: 0.5rem;
+    border-radius: 8px 8px 0 0;
+  }
+
+  .bt-device.dev-a .bt-device-label {
+    color: var(--sig-accent);
+    background: rgba(110, 231, 183, 0.08);
+  }
+
+  .bt-device.dev-b .bt-device-label {
+    color: #60a5fa;
+    background: rgba(96, 165, 250, 0.08);
+  }
+
+  .bt-step {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.75rem 0.85rem;
+  }
+
+  .bt-step .bt-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.25rem;
+  }
+
+  .bt-device.dev-a .bt-step .bt-tag { color: var(--sig-accent); }
+  .bt-device.dev-b .bt-step .bt-tag { color: #60a5fa; }
+
+  .bt-step .bt-text {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  .bt-step .bt-text strong { color: var(--text); font-weight: 600; }
+
+  .bt-step .bt-formula {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: #60a5fa;
+    background: rgba(96, 165, 250, 0.08);
+    padding: 0.2rem 0.55rem;
+    border-radius: 4px;
+    display: inline-block;
+    margin-top: 0.3rem;
+  }
+
+  .bt-arrows {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 2.5rem 0.7rem 0;
+  }
+
+  .bt-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--text-dim);
+    gap: 0.1rem;
+  }
+
+  .bt-arrow .arrow-line {
+    font-size: 1.1rem;
+    color: #60a5fa;
+  }
+
+  .bt-result-box {
+    background: rgba(96, 165, 250, 0.06);
+    border: 1px solid rgba(96, 165, 250, 0.18);
+    border-radius: 10px;
+    padding: 0.85rem 1.1rem;
+    text-align: center;
+    margin-bottom: 0.75rem;
+    font-size: 0.82rem;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .bt-result-box .bt-res-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #60a5fa;
+    margin-bottom: 0.35rem;
+  }
+
+  .bt-result-box strong { color: var(--text); font-weight: 600; }
+  .bt-result-box .bt-hl { color: #60a5fa; font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+
+  @media (max-width: 700px) {
+    .bt-flow { grid-template-columns: 1fr; }
+    .bt-arrows { flex-direction: row; padding: 0.5rem 0; }
+  }
+
+  /* Eschenauer-Gligor Section */
+  .eg-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .eg-header h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #a78bfa;
+  }
+
+  .eg-header p {
+    color: var(--text-dim);
+    font-size: 0.78rem;
+    margin-top: 0.2rem;
+  }
+
+  .eg-desc {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    font-size: 0.82rem;
+    color: var(--text);
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+  }
+
+  .eg-desc strong { font-weight: 600; }
+  .eg-desc .eg-hl {
+    font-family: 'JetBrains Mono', monospace;
+    color: #a78bfa;
+    font-weight: 600;
+  }
+
+  .eg-stat {
+    background: rgba(167, 139, 250, 0.06);
+    border: 1px solid rgba(167, 139, 250, 0.18);
+    border-radius: 10px;
+    padding: 0.85rem 1.1rem;
+    text-align: center;
+    margin-bottom: 0.75rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--text);
+  }
+
+  .eg-stat .stat-val {
+    color: #a78bfa;
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+
+  /* Node diagram */
+  .eg-diagram {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 0.75rem;
+    padding: 1.25rem 0;
+  }
+
+  .eg-node {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    position: relative;
+    z-index: 1;
+  }
+
+  .eg-node.n-a {
+    background: rgba(110, 231, 183, 0.15);
+    border: 2px solid var(--sig-accent);
+    color: var(--sig-accent);
+  }
+
+  .eg-node.n-e {
+    background: rgba(167, 139, 250, 0.15);
+    border: 2px solid #a78bfa;
+    color: #a78bfa;
+  }
+
+  .eg-node.n-c {
+    background: rgba(96, 165, 250, 0.15);
+    border: 2px solid #60a5fa;
+    color: #60a5fa;
+  }
+
+  .eg-link {
+    width: 70px;
+    height: 2px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .eg-link.connected {
+    background: rgba(167, 139, 250, 0.5);
+  }
+
+  .eg-link.disconnected {
+    background: transparent;
+    border-top: 2px dashed rgba(248, 113, 113, 0.4);
+  }
+
+  .eg-link-label {
+    position: absolute;
+    top: -18px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.58rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .eg-link.connected .eg-link-label { color: #a78bfa; }
+  .eg-link.disconnected .eg-link-label { color: #f87171; }
+
+  .eg-path-note {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.85rem 1.1rem;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    line-height: 1.55;
+    text-align: center;
+  }
+
+  .eg-path-note strong { color: var(--text); font-weight: 600; }
+  .eg-path-note .eg-hl { color: #a78bfa; font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+
+  /* Microprocessor Attacks Section */
+  .atk-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .atk-header h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #f87171;
+  }
+
+  .atk-header p {
+    color: var(--text-dim);
+    font-size: 0.78rem;
+    margin-top: 0.2rem;
+  }
+
+  .atk-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .atk-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .atk-card .atk-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  .atk-card.plunder .atk-name { color: #fbbf24; }
+  .atk-card.meltdown .atk-name { color: #f87171; }
+
+  .atk-card .atk-target {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    display: inline-block;
+    width: fit-content;
+  }
+
+  .atk-card.plunder .atk-target {
+    color: #fbbf24;
+    background: rgba(251, 191, 36, 0.1);
+  }
+
+  .atk-card.meltdown .atk-target {
+    color: #f87171;
+    background: rgba(248, 113, 113, 0.1);
+  }
+
+  .atk-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .atk-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: var(--text-dim);
+  }
+
+  .atk-step strong { color: var(--text); font-weight: 600; }
+
+  .atk-step .atk-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    font-weight: 700;
+    padding: 0.12rem 0.4rem;
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .atk-card.plunder .atk-num {
+    color: #fbbf24;
+    background: rgba(251, 191, 36, 0.1);
+  }
+
+  .atk-card.meltdown .atk-num {
+    color: #f87171;
+    background: rgba(248, 113, 113, 0.1);
+  }
+
+  @media (max-width: 700px) {
+    .atk-grid { grid-template-columns: 1fr; }
+  }
+
+  /* TVR Assessment Section */
+  .tvr-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .tvr-header h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fb923c;
+  }
+
+  .tvr-header p {
+    color: var(--text-dim);
+    font-size: 0.78rem;
+    margin-top: 0.2rem;
+  }
+
+  .tvr-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .tvr-col {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.15rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .tvr-col .tvr-col-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .tvr-col .tvr-icon { font-size: 1.2rem; }
+
+  .tvr-col .tvr-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .tvr-col.threat .tvr-label { color: #f87171; }
+  .tvr-col.vuln .tvr-label { color: #fbbf24; }
+  .tvr-col.risk .tvr-label { color: #fb923c; }
+
+  .tvr-item {
+    background: var(--surface-alt);
+    border-radius: 8px;
+    padding: 0.65rem 0.75rem;
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+    border-left: 3px solid transparent;
+  }
+
+  .tvr-item strong { color: var(--text); font-weight: 600; }
+
+  .tvr-col.threat .tvr-item { border-left-color: rgba(248, 113, 113, 0.4); }
+  .tvr-col.vuln .tvr-item { border-left-color: rgba(251, 191, 36, 0.4); }
+  .tvr-col.risk .tvr-item { border-left-color: rgba(251, 146, 60, 0.4); }
+
+  @media (max-width: 700px) {
+    .tvr-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Buffer Overflow Section */
+  .bof-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .bof-header h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #e879f9;
+  }
+
+  .bof-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .bof-step {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.85rem 1.1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    font-size: 0.82rem;
+    line-height: 1.55;
+    color: var(--text-dim);
+  }
+
+  .bof-step strong { color: var(--text); font-weight: 600; }
+
+  .bof-step .bof-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #e879f9;
+    background: rgba(232, 121, 249, 0.1);
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* Stack diagram */
+  .bof-diagram {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 1.5rem;
+    align-items: start;
+    margin-bottom: 0.75rem;
+  }
+
+  .bof-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .bof-stack-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    color: var(--text-dim);
+  }
+
+  .bof-cell {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-align: center;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid var(--border);
+  }
+
+  .bof-cell:first-of-type { border-radius: 8px 8px 0 0; }
+  .bof-cell:last-of-type { border-radius: 0 0 8px 8px; }
+
+  .bof-cell.normal { background: var(--surface); color: var(--text-dim); }
+  .bof-cell.ret { background: rgba(110, 231, 183, 0.08); color: var(--sig-accent); }
+  .bof-cell.overflow { background: rgba(232, 121, 249, 0.1); color: #e879f9; }
+  .bof-cell.malicious { background: rgba(248, 113, 113, 0.1); color: #f87171; }
+
+  .bof-arrow-col {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #e879f9;
+    padding-top: 1.5rem;
+  }
+
+  @media (max-width: 700px) {
+    .bof-diagram { grid-template-columns: 1fr; gap: 0.75rem; }
+    .bof-arrow-col { transform: rotate(90deg); padding: 0; }
+  }
+
+  /* PKI Section */
+  .pki-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .pki-header h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #34d399;
+  }
+
+  .pki-header p {
+    color: var(--text-dim);
+    font-size: 0.78rem;
+    margin-top: 0.2rem;
+  }
+
+  .pki-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .pki-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+    transition: border-color 0.2s;
+  }
+
+  .pki-card:hover {
+    border-color: rgba(52, 211, 153, 0.3);
+  }
+
+  .pki-card.full-width {
+    grid-column: 1 / -1;
+    max-width: 50%;
+    justify-self: center;
+  }
+
+  .pki-card .pki-icon {
+    font-size: 1.3rem;
+    margin-bottom: 0.4rem;
+    display: block;
+  }
+
+  .pki-card .pki-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #34d399;
+    margin-bottom: 0.35rem;
+  }
+
+  .pki-card .pki-def {
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+
+  .pki-card .pki-def strong { color: var(--text); font-weight: 600; }
+
+  @media (max-width: 700px) {
+    .pki-grid { grid-template-columns: 1fr; }
+    .pki-card.full-width { max-width: 100%; }
+  }
+
+  /* UAV Security Violations Section */
+  .uav-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .uav-header h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #38bdf8;
+  }
+
+  .uav-header p {
+    color: var(--text-dim);
+    font-size: 0.78rem;
+    margin-top: 0.2rem;
+  }
+
+  .uav-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .uav-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+    border-left: 3px solid transparent;
+    transition: border-color 0.2s;
+  }
+
+  .uav-card:hover { border-color: rgba(56, 189, 248, 0.3); }
+
+  .uav-card .uav-type {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.35rem;
+  }
+
+  .uav-card .uav-desc {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  .uav-card .uav-desc strong { color: var(--text); font-weight: 600; }
+
+  .uav-card.conf { border-left-color: #f87171; }
+  .uav-card.conf .uav-type { color: #f87171; }
+
+  .uav-card.integ { border-left-color: #fbbf24; }
+  .uav-card.integ .uav-type { color: #fbbf24; }
+
+  .uav-card.avail { border-left-color: #fb923c; }
+  .uav-card.avail .uav-type { color: #fb923c; }
+
+  .uav-card.auth { border-left-color: #a78bfa; }
+  .uav-card.auth .uav-type { color: #a78bfa; }
+
+  .uav-card.nonrep { border-left-color: #38bdf8; }
+  .uav-card.nonrep .uav-type { color: #38bdf8; }
+
+  .uav-card.priv { border-left-color: #e879f9; }
+  .uav-card.priv .uav-type { color: #e879f9; }
+
+  @media (max-width: 700px) {
+    .uav-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Real-Time Constraints Section */
+  .rtc-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .rtc-header h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #f472b6;
+  }
+
+  .rtc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .rtc-card {
+    border-radius: 12px;
+    padding: 1.25rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .rtc-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+  }
+
+  .rtc-card.hard {
+    background: rgba(248, 113, 113, 0.05);
+    border: 1px solid rgba(248, 113, 113, 0.18);
+  }
+  .rtc-card.hard::before { background: #f87171; }
+
+  .rtc-card.soft {
+    background: rgba(251, 191, 36, 0.05);
+    border: 1px solid rgba(251, 191, 36, 0.18);
+  }
+  .rtc-card.soft::before { background: #fbbf24; }
+
+  .rtc-card .rtc-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 0.5rem;
+  }
+
+  .rtc-card.hard .rtc-label { color: #f87171; }
+  .rtc-card.soft .rtc-label { color: #fbbf24; }
+
+  .rtc-card .rtc-def {
+    font-size: 0.82rem;
+    color: var(--text);
+    line-height: 1.55;
+    margin-bottom: 0.5rem;
+  }
+
+  .rtc-card .rtc-def strong { font-weight: 600; }
+
+  .rtc-card .rtc-example {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+    padding-left: 0.6rem;
+    border-left: 2px solid rgba(255,255,255,0.08);
+    margin-bottom: 0.6rem;
+  }
+
+  .rtc-card .rtc-sec-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.3rem;
+  }
+
+  .rtc-card.hard .rtc-sec-label { color: #f87171; }
+  .rtc-card.soft .rtc-sec-label { color: #fbbf24; }
+
+  .rtc-card .rtc-sec {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+    padding-left: 0.6rem;
+  }
+
+  .rtc-card.hard .rtc-sec { border-left: 2px solid rgba(248, 113, 113, 0.25); }
+  .rtc-card.soft .rtc-sec { border-left: 2px solid rgba(251, 191, 36, 0.25); }
+
+  .rtc-card .rtc-sec strong { color: var(--text); font-weight: 600; }
+
+  @media (max-width: 700px) {
+    .rtc-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Mealy FSM Section */
+  .fsm-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .fsm-header h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #4ade80;
+  }
+
+  .fsm-header p {
+    color: var(--text-dim);
+    font-size: 0.78rem;
+    margin-top: 0.2rem;
+  }
+
+  .fsm-diagram {
+    position: relative;
+    width: 100%;
+    height: 380px;
+    margin-bottom: 0.75rem;
+  }
+
+  .fsm-state {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 700;
+    z-index: 2;
+  }
+
+  .fsm-state.s-off {
+    background: rgba(248, 113, 113, 0.12);
+    border: 2px solid #f87171;
+    color: #f87171;
+    top: 150px;
+    left: 30px;
+  }
+
+  .fsm-state.s-idle {
+    background: rgba(251, 191, 36, 0.12);
+    border: 2px solid #fbbf24;
+    color: #fbbf24;
+    top: 150px;
+    right: 30px;
+  }
+
+  .fsm-state.s-on {
+    background: rgba(74, 222, 128, 0.12);
+    border: 2px solid #4ade80;
+    color: #4ade80;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .fsm-svg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  .fsm-svg text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    fill: var(--text-dim);
+  }
+
+  .fsm-svg text.input-label {
+    font-weight: 600;
+  }
+
+  .fsm-svg .arrow-line {
+    stroke-width: 1.5;
+    fill: none;
+  }
+
+  .fsm-svg .arrow-head {
+    stroke-width: 1.5;
+  }
+
+  .fsm-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.78rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .fsm-table th {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+    background: var(--surface-alt);
+    padding: 0.6rem 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .fsm-table td {
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid rgba(42, 46, 61, 0.5);
+    color: var(--text-dim);
+  }
+
+  .fsm-table td strong { color: var(--text); font-weight: 600; }
+
+  .fsm-table .out-on {
+    color: #4ade80;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+  }
+
+  .fsm-table .out-off {
+    color: #f87171;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+  }
+
+  .fsm-table .state-off { color: #f87171; font-weight: 600; }
+  .fsm-table .state-on { color: #4ade80; font-weight: 600; }
+  .fsm-table .state-idle { color: #fbbf24; font-weight: 600; }
+
+  /* HSM Section */
+  .hsm-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .hsm-header h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #22d3ee;
+  }
+
+  .hsm-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .hsm-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.15rem 1.1rem;
+    transition: border-color 0.2s;
+  }
+
+  .hsm-card:hover { border-color: rgba(34, 211, 238, 0.3); }
+
+  .hsm-card .hsm-icon {
+    font-size: 1.3rem;
+    margin-bottom: 0.4rem;
+    display: block;
+  }
+
+  .hsm-card .hsm-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #22d3ee;
+    margin-bottom: 0.55rem;
+  }
+
+  .hsm-card .hsm-row {
+    font-size: 0.78rem;
+    line-height: 1.5;
+    margin-bottom: 0.4rem;
+    padding-left: 0.6rem;
+  }
+
+  .hsm-card .hsm-row:last-child { margin-bottom: 0; }
+
+  .hsm-card .hsm-row.adv {
+    border-left: 2px solid rgba(74, 222, 128, 0.35);
+    color: var(--text-dim);
+  }
+
+  .hsm-card .hsm-row.dis {
+    border-left: 2px solid rgba(248, 113, 113, 0.35);
+    color: var(--text-dim);
+  }
+
+  .hsm-card .hsm-row strong { color: var(--text); font-weight: 600; }
+
+  .hsm-card .hsm-row .adv-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: #4ade80;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .hsm-card .hsm-row .dis-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: #f87171;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  @media (max-width: 700px) {
+    .hsm-grid { grid-template-columns: 1fr; }
+  }
+
+  /* WEP vs WPA Section */
+  .wifi-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .wifi-header h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+
+  .wifi-header h2 .wep-hl { color: #f87171; }
+  .wifi-header h2 .vs-hl { color: var(--text-dim); font-size: 1rem; margin: 0 0.3rem; }
+  .wifi-header h2 .wpa-hl { color: #4ade80; }
+
+  .wifi-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .wifi-card {
+    border-radius: 12px;
+    padding: 1.25rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .wifi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+  }
+
+  .wifi-card.wep {
+    background: rgba(248, 113, 113, 0.05);
+    border: 1px solid rgba(248, 113, 113, 0.18);
+  }
+  .wifi-card.wep::before { background: #f87171; }
+
+  .wifi-card.wpa {
+    background: rgba(74, 222, 128, 0.05);
+    border: 1px solid rgba(74, 222, 128, 0.18);
+  }
+  .wifi-card.wpa::before { background: #4ade80; }
+
+  .wifi-card .wifi-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 0.6rem;
+  }
+
+  .wifi-card.wep .wifi-label { color: #f87171; }
+  .wifi-card.wpa .wifi-label { color: #4ade80; }
+
+  .wifi-card .wifi-section-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+    margin-bottom: 0.25rem;
+    margin-top: 0.5rem;
+  }
+
+  .wifi-card .wifi-section-tag:first-of-type { margin-top: 0; }
+
+  .wifi-card .wifi-text {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    line-height: 1.55;
+  }
+
+  .wifi-card .wifi-text strong { color: var(--text); font-weight: 600; }
+
+  .wifi-verdict {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.85rem 1.1rem;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    line-height: 1.55;
+    text-align: center;
+  }
+
+  .wifi-verdict strong { color: var(--text); font-weight: 600; }
+
+  @media (max-width: 700px) {
+    .wifi-row { grid-template-columns: 1fr; }
+  }
+
+  /* Timing Attack Section */
+  .ta-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .ta-header h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fb7185;
+  }
+
+  .ta-how {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.35rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .ta-how .ta-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #fb7185;
+    margin-bottom: 0.7rem;
+  }
+
+  .ta-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .ta-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    font-size: 0.82rem;
+    line-height: 1.55;
+    color: var(--text-dim);
+  }
+
+  .ta-step strong { color: var(--text); font-weight: 600; }
+
+  .ta-step .ta-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #fb7185;
+    background: rgba(251, 113, 133, 0.1);
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* Timing example diagram */
+  .ta-example {
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .ta-example .ta-ex-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-dim);
+    margin-bottom: 0.6rem;
+  }
+
+  .ta-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.4rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+  }
+
+  .ta-bar-row:last-child { margin-bottom: 0; }
+
+  .ta-bar-label {
+    width: 90px;
+    text-align: right;
+    color: var(--text-dim);
+    flex-shrink: 0;
+  }
+
+  .ta-bar {
+    height: 22px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    padding-left: 0.5rem;
+    font-size: 0.62rem;
+    font-weight: 600;
+    color: var(--bg);
+  }
+
+  .ta-bar.short { width: 80px; background: #f87171; }
+  .ta-bar.medium { width: 160px; background: #fbbf24; }
+  .ta-bar.long { width: 260px; background: #4ade80; }
+
+  .ta-bar-time {
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    margin-left: 0.4rem;
+  }
+
+  .ta-prevent {
+    background: rgba(74, 222, 128, 0.05);
+    border: 1px solid rgba(74, 222, 128, 0.15);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+  }
+
+  .ta-prevent .ta-prev-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #4ade80;
+    margin-bottom: 0.5rem;
+  }
+
+  .ta-prevent .ta-prev-text {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    line-height: 1.55;
+  }
+
+  .ta-prevent .ta-prev-text strong { color: var(--text); font-weight: 600; }
+
+  /* Footer */
+  .footer {
+    margin-top: 2rem;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    opacity: 0.5;
+  }
+
+  /* Test Mode */
+  .test-mode-btn {
+    background: rgba(251, 191, 36, 0.12) !important;
+    border-color: rgba(251, 191, 36, 0.3) !important;
+    color: #fbbf24 !important;
+  }
+
+  .test-mode-btn:hover {
+    background: rgba(251, 191, 36, 0.2) !important;
+    border-color: rgba(251, 191, 36, 0.5) !important;
+  }
+
+  .test-mode-btn.active {
+    background: #fbbf24 !important;
+    color: var(--bg) !important;
+    border-color: #fbbf24 !important;
+  }
+
+  /* Test mode overlay per section */
+  .test-overlay {
+    display: none;
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .test-overlay.visible { display: block; }
+
+  .test-overlay .test-prompt {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #fbbf24;
+    margin-bottom: 0.6rem;
+  }
+
+  .test-overlay .test-question {
+    font-size: 0.88rem;
+    color: var(--text);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .test-overlay textarea {
+    width: 100%;
+    min-height: 100px;
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.75rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    color: var(--text);
+    resize: vertical;
+    outline: none;
+    margin-bottom: 0.75rem;
+  }
+
+  .test-overlay textarea:focus {
+    border-color: rgba(251, 191, 36, 0.4);
+  }
+
+  .test-overlay textarea::placeholder {
+    color: var(--text-dim);
+    opacity: 0.5;
+  }
+
+  .test-btn-row {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .test-reveal-btn, .test-self-btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.45rem 0.85rem;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .test-reveal-btn {
+    background: rgba(251, 191, 36, 0.1);
+    color: #fbbf24;
+    border-color: rgba(251, 191, 36, 0.3);
+  }
+
+  .test-reveal-btn:hover {
+    background: rgba(251, 191, 36, 0.2);
+  }
+
+  .test-self-btn.correct {
+    background: rgba(74, 222, 128, 0.1);
+    color: #4ade80;
+    border-color: rgba(74, 222, 128, 0.3);
+  }
+
+  .test-self-btn.correct:hover { background: rgba(74, 222, 128, 0.2); }
+
+  .test-self-btn.wrong {
+    background: rgba(248, 113, 113, 0.1);
+    color: #f87171;
+    border-color: rgba(248, 113, 113, 0.3);
+  }
+
+  .test-self-btn.wrong:hover { background: rgba(248, 113, 113, 0.2); }
+
+  .test-self-btn.retry {
+    background: rgba(167, 139, 250, 0.1);
+    color: #a78bfa;
+    border-color: rgba(167, 139, 250, 0.3);
+  }
+
+  .test-self-btn.retry:hover { background: rgba(167, 139, 250, 0.2); }
+
+  /* Section content hiding in test mode */
+  body.test-mode .hideable { display: none; }
+  body.test-mode .test-overlay.visible { display: block; }
+
+  /* Score bar */
+  .score-bar {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(15, 17, 23, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid var(--border);
+    padding: 0.6rem 1.25rem;
+    z-index: 100;
+    text-align: center;
+  }
+
+  .score-bar.visible { display: flex; justify-content: center; align-items: center; gap: 1.5rem; }
+
+  .score-bar .score-item {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+  }
+
+  .score-bar .score-item.total { color: var(--text-dim); }
+  .score-bar .score-item.right { color: #4ade80; }
+  .score-bar .score-item.wrong-score { color: #f87171; }
+  .score-bar .score-item.pending { color: #fbbf24; }
+
+  .score-bar .reset-btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 600;
+    padding: 0.3rem 0.7rem;
+    border-radius: 5px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .score-bar .reset-btn:hover {
+    color: var(--text);
+    border-color: rgba(255,255,255,0.2);
+  }
+
+  /* Responsive */
+  @media (max-width: 700px) {
+    .compare-row, .analogy-row { grid-template-columns: 1fr; }
+    .prop-row { grid-template-columns: 100px 1fr 1fr; font-size: 0.75rem; }
+    .prop-label { font-size: 0.72rem; }
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <!-- Navigation -->
+  <div class="nav-bar">
+    <div class="nav-inner">
+      <div class="nav-title">Quick Navigation</div>
+      <div class="nav-links">
+        <a href="#sig-vs-mac">Sig vs MAC</a>
+        <a href="#privacy-types">Privacy Types</a>
+        <a href="#secure-printing">Secure Printing</a>
+        <a href="#vernam-cipher">Vernam Cipher</a>
+        <a href="#cps-robustness">CPS Robustness</a>
+        <a href="#diffie-hellman">Diffie-Hellman</a>
+        <a href="#bluetooth-init">Bluetooth Init Key</a>
+        <a href="#eschenauer-gligor">Eschenauer-Gligor</a>
+        <a href="#cpu-attacks">CPU Attacks</a>
+        <a href="#tvr-assessment">TVR Assessment</a>
+        <a href="#buffer-overflow">Buffer Overflow</a>
+        <a href="#pki">PKI</a>
+        <a href="#uav-security">UAV Security</a>
+        <a href="#real-time">Real-Time Constraints</a>
+        <a href="#mealy-fsm">Mealy FSM</a>
+        <a href="#hsm">HSM Types</a>
+        <a href="#wep-vs-wpa">WEP vs WPA</a>
+        <a href="#timing-attack">Timing Attack</a>
+        <a href="javascript:void(0)" class="test-mode-btn" id="testModeBtn" onclick="toggleTestMode()">🧪 Test Mode</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <div class="header" id="sig-vs-mac">
+    <h1><span class="sig">Digital Signature</span> <span class="vs">vs</span> <span class="mac">MAC</span></h1>
+    <p>cryptography cheat sheet</p>
+  </div>
+
+  <!-- Overview cards -->
+  <div class="compare-row">
+    <div class="card sig">
+      <div class="card-label">Digital Signature</div>
+      <span class="card-icon">🔏</span>
+      <div class="card-title">Asymmetric (Public/Private Key)</div>
+      <div class="card-desc">
+        Sender signs with their <strong>private key</strong>. Anyone with the <strong>public key</strong> can verify. Provides <strong>non-repudiation</strong>: the signer cannot deny authorship.
+      </div>
+    </div>
+    <div class="card mac">
+      <div class="card-label">MAC</div>
+      <span class="card-icon">🤝</span>
+      <div class="card-title">Symmetric (Shared Secret Key)</div>
+      <div class="card-desc">
+        Both parties share the <strong>same secret key</strong>. Either side can compute and verify the tag. <strong>No non-repudiation</strong>: both could have created it.
+      </div>
+    </div>
+  </div>
+
+  <!-- Comparison table -->
+  <div class="props-section">
+    <div class="section-title">Property Comparison</div>
+
+    <div class="prop-row">
+      <div class="prop-label">Key Type</div>
+      <div class="prop-val sig-col"><span class="tag green">Asymmetric</span></div>
+      <div class="prop-val mac-col"><span class="tag pink">Symmetric</span></div>
+    </div>
+    <div class="prop-row">
+      <div class="prop-label">Non-Repudiation</div>
+      <div class="prop-val sig-col"><span class="tag green">Yes</span></div>
+      <div class="prop-val mac-col"><span class="tag neutral">No</span></div>
+    </div>
+    <div class="prop-row">
+      <div class="prop-label">Who Verifies</div>
+      <div class="prop-val sig-col">Anyone (public key)</div>
+      <div class="prop-val mac-col">Only key holders</div>
+    </div>
+    <div class="prop-row">
+      <div class="prop-label">Speed</div>
+      <div class="prop-val sig-col"><span class="tag neutral">Slower</span></div>
+      <div class="prop-val mac-col"><span class="tag yellow">Faster</span></div>
+    </div>
+    <div class="prop-row">
+      <div class="prop-label">Algorithms</div>
+      <div class="prop-val sig-col">RSA, DSA, ECDSA</div>
+      <div class="prop-val mac-col">HMAC, CMAC</div>
+    </div>
+    <div class="prop-row">
+      <div class="prop-label">Use Cases</div>
+      <div class="prop-val sig-col">Contracts, certs, code signing</div>
+      <div class="prop-val mac-col">TLS, API auth, sessions</div>
+    </div>
+  </div>
+
+  <!-- Analogies -->
+  <div class="analogy-row">
+    <div class="analogy-card sig-a">
+      <span class="emoji">📜</span>
+      <h3>Notary Stamp</h3>
+      <p>Like a notary seal on a document. Only the notary has the stamp, but anyone can check the public registry to verify it. The notary cannot deny stamping it.</p>
+    </div>
+    <div class="analogy-card mac-a">
+      <span class="emoji">🤫</span>
+      <h3>Secret Handshake</h3>
+      <p>Like a secret handshake between two friends. Both know it, so they can verify each other, but neither can prove to an outsider which one started it.</p>
+    </div>
+  </div>
+
+  <!-- Privacy Types Section -->
+  <hr class="divider"><span class="divider-label">New Topic</span>
+
+  <div class="privacy-header section-anchor" id="privacy-types">
+    <h2>Types of Individual Privacy</h2>
+  </div>
+
+  <div class="privacy-grid">
+    <div class="privacy-card">
+      <span class="p-icon">🧠</span>
+      <div class="p-type">Internal Privacy</div>
+      <div class="p-def">Privacy of one's thoughts, beliefs, personal opinions, and inner experiences.</div>
+      <div class="p-example">A person's right to hold political or religious beliefs without being forced to disclose them to an employer.</div>
+    </div>
+    <div class="privacy-card">
+      <span class="p-icon">📄</span>
+      <div class="p-type">External Privacy</div>
+      <div class="p-def">Privacy of outward-facing personal data such as financial records, career history, and medical information.</div>
+      <div class="p-example">A hospital keeping your medical records confidential and not sharing them with insurers without consent.</div>
+    </div>
+    <div class="privacy-card">
+      <span class="p-icon">📍</span>
+      <div class="p-type">Territorial Privacy</div>
+      <div class="p-def">Protection of physical spaces, location visits, daily habits, and movement from tracking or intrusion.</div>
+      <div class="p-example">Disabling location tracking on your phone so apps cannot log the places you visit daily.</div>
+    </div>
+    <div class="privacy-card">
+      <span class="p-icon">👥</span>
+      <div class="p-type">Social Privacy</div>
+      <div class="p-def">Privacy within social relationships, including interactions with friends, family, and personal communications.</div>
+      <div class="p-example">Keeping your contact list and private messages on a messaging app hidden from third-party data brokers.</div>
+    </div>
+  </div>
+
+  <!-- Secure Printing Section -->
+  <hr class="divider"><span class="divider-label">New Topic</span>
+
+  <div class="print-header section-anchor" id="secure-printing">
+    <h2>Secure Printing Technologies</h2>
+  </div>
+
+  <div class="print-grid">
+    <div class="print-card">
+      <span class="pr-icon">💧</span>
+      <div class="pr-type">Watermarks</div>
+      <div class="pr-def">Faint images or patterns embedded into paper during manufacturing, visible when held to light. Used in banknotes and official documents.</div>
+    </div>
+    <div class="print-card">
+      <span class="pr-icon">🌈</span>
+      <div class="pr-type">Holograms</div>
+      <div class="pr-def">Metallic labels that shift in color and pattern at different viewing angles. Found on credit cards, passports, and product packaging.</div>
+    </div>
+    <div class="print-card">
+      <span class="pr-icon">🔍</span>
+      <div class="pr-type">Microprinting</div>
+      <div class="pr-def">Extremely small text unreadable to the naked eye. Photocopying or scanning destroys legibility, making forgery detectable. Used on checks and currency.</div>
+    </div>
+    <div class="print-card">
+      <span class="pr-icon">🔮</span>
+      <div class="pr-type">UV / Fluorescent Ink</div>
+      <div class="pr-def">Ink invisible under normal light but glows under ultraviolet light. Used on event tickets, stamps, and banknotes for hidden verification.</div>
+    </div>
+    <div class="print-card">
+      <span class="pr-icon">🧵</span>
+      <div class="pr-type">Security Threads</div>
+      <div class="pr-def">Thin metallic or plastic strips embedded within paper. May contain microtext or color-shifting properties. Nearly impossible to replicate with standard printers.</div>
+    </div>
+    <div class="print-card">
+      <span class="pr-icon">🚫</span>
+      <div class="pr-type">Tamper-Evident Printing</div>
+      <div class="pr-def">Special inks or coatings that reveal visible damage (e.g. "VOID" patterns) when altered or peeled. Common on prescription pads and secure labels.</div>
+    </div>
+    <div class="print-card full-width">
+      <span class="pr-icon">🌀</span>
+      <div class="pr-type">Guilloché</div>
+      <div class="pr-def">Intricate, repetitive spirograph-like line patterns engraved with high precision. Extremely difficult to reproduce accurately. Found on banknotes, certificates, and diplomas.</div>
+    </div>
+  </div>
+
+  <!-- Vernam Cipher Section -->
+  <hr class="divider"><span class="divider-label">New Topic</span>
+
+  <div class="vernam-header section-anchor" id="vernam-cipher">
+    <h2>Vernam Cipher (One-Time Pad)</h2>
+    <p>theoretically unbreakable, practically challenging</p>
+  </div>
+
+  <!-- How it works -->
+  <div class="vernam-how">
+    <div class="v-label">How It Works</div>
+    <div class="v-steps">
+      <div class="v-step">
+        <span class="step-num">01</span>
+        <span>Sender and receiver share an identical <strong>truly random key</strong> that is at least as long as the plaintext message.</span>
+      </div>
+      <div class="v-step">
+        <span class="step-num">02</span>
+        <span>Each character (or bit) of the plaintext is combined with the corresponding key character using <strong>XOR</strong> (binary) or <strong>modular addition</strong> (letters).</span>
+      </div>
+      <div class="v-step">
+        <span class="step-num">03</span>
+        <span>To decrypt, the receiver applies the <strong>same operation in reverse</strong> using the identical key.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Example -->
+  <div class="vernam-example">
+    <div class="ex-label">Example (mod 26)</div>
+    <div class="ex-row">Plaintext: <span class="hl">H (7)</span> &nbsp;+&nbsp; Key: <span class="hl">D (3)</span> &nbsp;=&nbsp; (7+3) mod 26 = 10 &nbsp;→&nbsp; Cipher: <span class="res">K</span></div>
+    <div class="ex-row">Ciphertext: <span class="res">K (10)</span> &nbsp;−&nbsp; Key: <span class="hl">D (3)</span> &nbsp;=&nbsp; (10−3) mod 26 = 7 &nbsp;→&nbsp; Plain: <span class="res">H</span></div>
+  </div>
+
+  <!-- Perfect secrecy -->
+  <div class="vernam-perfect">
+    <div class="vp-label">Why It Is Theoretically Perfect</div>
+    <div class="vp-text">If the key is truly random, used only once, and kept secret, the ciphertext reveals <strong>zero information</strong> about the plaintext. Every possible plaintext is equally likely for any given ciphertext. This is called <strong>perfect secrecy</strong>, proven mathematically by Claude Shannon.</div>
+  </div>
+
+  <!-- Practical Limitations -->
+  <div class="vernam-limits-label">Practical Limitations</div>
+  <div class="vernam-limits">
+    <div class="vlimit-card">
+      <div class="vl-title">Key Length</div>
+      <div class="vl-text">The key must be exactly as long as the message, making generation and storage a major challenge for large data volumes.</div>
+    </div>
+    <div class="vlimit-card">
+      <div class="vl-title">Key Distribution</div>
+      <div class="vl-text">The key must be securely delivered to both parties beforehand. If a secure channel exists for the key, you could arguably just send the message through it.</div>
+    </div>
+    <div class="vlimit-card">
+      <div class="vl-title">No Key Reuse</div>
+      <div class="vl-text">Reusing any part of a key destroys security. An attacker can XOR two ciphertexts to eliminate the key and reveal plaintext patterns.</div>
+    </div>
+    <div class="vlimit-card">
+      <div class="vl-title">True Randomness</div>
+      <div class="vl-text">Generating truly random keys (not pseudorandom) at scale is difficult and resource-intensive.</div>
+    </div>
+  </div>
+
+  <!-- CPS Robustness Section -->
+  <hr class="divider"><span class="divider-label">New Topic</span>
+
+  <div class="cps-header section-anchor" id="cps-robustness">
+    <h2>CPS Robustness Criteria</h2>
+    <p>five properties of dependable cyber-physical systems</p>
+  </div>
+
+  <div class="cps-grid">
+    <div class="cps-card">
+      <span class="cps-icon">⏱️</span>
+      <div>
+        <div class="cps-name">Reliability</div>
+        <div class="cps-formula">R(t)</div>
+        <div class="cps-def">The probability that the system is working correctly at time <strong>t</strong>, given that it was working correctly at <strong>t = 0</strong>. Measures how likely the system is to keep running without failure from the start.</div>
+      </div>
+    </div>
+    <div class="cps-card">
+      <span class="cps-icon">🔧</span>
+      <div>
+        <div class="cps-name">Maintainability</div>
+        <div class="cps-formula">M(d)</div>
+        <div class="cps-def">The probability that the system is working correctly again after duration <strong>d</strong> has passed since an error occurred. Captures how quickly and likely the system is to recover after a fault.</div>
+      </div>
+    </div>
+    <div class="cps-card">
+      <span class="cps-icon">✅</span>
+      <div>
+        <div class="cps-name">Availability</div>
+        <div class="cps-formula">A(t)</div>
+        <div class="cps-def">The probability that the system is working correctly at any given time <strong>t</strong>, regardless of what happened before. Unlike reliability, it does <strong>not</strong> assume the system was working at t = 0.</div>
+      </div>
+    </div>
+    <div class="cps-card">
+      <span class="cps-icon">🔒</span>
+      <div>
+        <div class="cps-name">Security</div>
+        <div class="cps-def">Ensures <strong>confidential</strong> and <strong>authenticated</strong> communication, control, and storage across the system.</div>
+      </div>
+    </div>
+    <div class="cps-card">
+      <span class="cps-icon">🛡️</span>
+      <div>
+        <div class="cps-name">Safety</div>
+        <div class="cps-def">The system causes <strong>no harm</strong> to people, property, or the environment, even when faults occur.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Diffie-Hellman Section -->
+  <hr class="divider"><span class="divider-label">New Topic</span>
+
+  <div class="dh-header section-anchor" id="diffie-hellman">
+    <h2>Diffie-Hellman Key Exchange</h2>
+    <p>shared secret over an insecure channel</p>
+  </div>
+
+  <!-- Setup -->
+  <div class="dh-setup">
+    <div class="dh-setup-label">Public Setup</div>
+    <div class="dh-setup-text">Alice and Bob publicly agree on a large prime <span class="pub">p</span> and a generator <span class="pub">g</span>. These are not secret.</div>
+  </div>
+
+  <!-- Flow -->
+  <div class="dh-flow">
+    <div class="dh-person alice">
+      <div class="dh-person-label">Alice</div>
+      <div class="dh-step">
+        <div class="step-tag">Step 1 — Private</div>
+        <div class="step-text">Picks a <strong>secret</strong> random number <strong>a</strong></div>
+      </div>
+      <div class="dh-step">
+        <div class="step-tag">Step 2 — Compute</div>
+        <div class="step-text">Computes her public value</div>
+        <div class="step-formula">A = g^a mod p</div>
+      </div>
+      <div class="dh-step">
+        <div class="step-tag">Step 4 — Shared Secret</div>
+        <div class="step-text">Uses Bob's public value B</div>
+        <div class="step-formula">S = B^a mod p = g^(ba) mod p</div>
+      </div>
+    </div>
+
+    <div class="dh-arrows">
+      <div class="dh-arrow">
+        <span>sends A</span>
+        <span class="arrow-line">→</span>
+      </div>
+      <div class="dh-arrow">
+        <span class="arrow-line">←</span>
+        <span>sends B</span>
+      </div>
+    </div>
+
+    <div class="dh-person bob">
+      <div class="dh-person-label">Bob</div>
+      <div class="dh-step">
+        <div class="step-tag">Step 1 — Private</div>
+        <div class="step-text">Picks a <strong>secret</strong> random number <strong>b</strong></div>
+      </div>
+      <div class="dh-step">
+        <div class="step-tag">Step 2 — Compute</div>
+        <div class="step-text">Computes his public value</div>
+        <div class="step-formula">B = g^b mod p</div>
+      </div>
+      <div class="dh-step">
+        <div class="step-tag">Step 4 — Shared Secret</div>
+        <div class="step-text">Uses Alice's public value A</div>
+        <div class="step-formula">S = A^b mod p = g^(ab) mod p</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Result -->
+  <div class="dh-result">
+    <div class="dh-res-label">Result</div>
+    <div class="dh-res-text">Both arrive at the same shared secret: <span class="formula">g^(ab) mod p = g^(ba) mod p</span><br>The secret S was never transmitted directly.</div>
+  </div>
+
+  <!-- Security note -->
+  <div class="dh-note">An eavesdropper sees <strong>p, g, A, B</strong> but computing S requires solving the <strong>discrete logarithm problem</strong>, which is computationally infeasible for large numbers.</div>
+
+  <!-- Bluetooth Init Key Section -->
+  <hr class="divider"><span class="divider-label">New Topic</span>
+
+  <div class="bt-header section-anchor" id="bluetooth-init">
+    <h2>Bluetooth Initialization Key</h2>
+    <p>establishment and verification of K_init</p>
+  </div>
+
+  <!-- Phase 1: Establishment -->
+  <div class="bt-phase-label">Phase 1 — Establishment of K_init</div>
+
+  <div class="bt-flow">
+    <div class="bt-device dev-a">
+      <div class="bt-device-label">Device A</div>
+      <div class="bt-step">
+        <div class="bt-tag">Has</div>
+        <div class="bt-text"><strong>BD_ADDR_A</strong> (48-bit Bluetooth address) and the shared <strong>PIN</strong></div>
+      </div>
+      <div class="bt-step">
+        <div class="bt-tag">Compute</div>
+        <div class="bt-text">Independently computes</div>
+        <div class="bt-formula">K_init = E22(BD_ADDR_A, RND, PIN)</div>
+      </div>
+    </div>
+
+    <div class="bt-arrows">
+      <div class="bt-arrow">
+        <span class="arrow-line">←</span>
+        <span>RND</span>
+      </div>
+    </div>
+
+    <div class="bt-device dev-b">
+      <div class="bt-device-label">Device B (initiator)</div>
+      <div class="bt-step">
+        <div class="bt-tag">Generate</div>
+        <div class="bt-text">Generates a <strong>random nonce (RND)</strong> and gathers Device A's <strong>BD_ADDR_A</strong></div>
+      </div>
+      <div class="bt-step">
+        <div class="bt-tag">Compute</div>
+        <div class="bt-text">Independently computes</div>
+        <div class="bt-formula">K_init = E22(BD_ADDR_A, RND, PIN)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bt-result-box">
+    <div class="bt-res-label">Result</div>
+    Both devices now share the same initialization key <span class="bt-hl">K_init</span> without it ever being transmitted directly.
+  </div>
+
+  <!-- Phase 2: Verification -->
+  <div class="bt-phase-label">Phase 2 — Verification (Challenge-Response)</div>
+
+  <div class="bt-flow">
+    <div class="bt-device dev-a">
+      <div class="bt-device-label">Device A (verifier)</div>
+      <div class="bt-step">
+        <div class="bt-tag">Challenge</div>
+        <div class="bt-text">Generates a new <strong>random nonce (RND)</strong> and sends it to Device B</div>
+      </div>
+      <div class="bt-step">
+        <div class="bt-tag">Verify</div>
+        <div class="bt-text">Computes its own response</div>
+        <div class="bt-formula">SRES' = f(BD_ADDR_B, RND, K_init)</div>
+      </div>
+      <div class="bt-step">
+        <div class="bt-tag">Compare</div>
+        <div class="bt-text">Checks if <strong>SRES == SRES'</strong>. If they match, Device B is authenticated.</div>
+      </div>
+    </div>
+
+    <div class="bt-arrows">
+      <div class="bt-arrow">
+        <span>RND</span>
+        <span class="arrow-line">→</span>
+      </div>
+      <div class="bt-arrow">
+        <span class="arrow-line">←</span>
+        <span>SRES</span>
+      </div>
+    </div>
+
+    <div class="bt-device dev-b">
+      <div class="bt-device-label">Device B (claimant)</div>
+      <div class="bt-step">
+        <div class="bt-tag">Receive</div>
+        <div class="bt-text">Receives the <strong>random nonce (RND)</strong> from Device A</div>
+      </div>
+      <div class="bt-step">
+        <div class="bt-tag">Respond</div>
+        <div class="bt-text">Computes response using Device B's address</div>
+        <div class="bt-formula">SRES = f(BD_ADDR_B, RND, K_init)</div>
+      </div>
+      <div class="bt-step">
+        <div class="bt-tag">Send</div>
+        <div class="bt-text">Sends <strong>SRES</strong> back to Device A</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bt-result-box">
+    <div class="bt-res-label">Result</div>
+    If <span class="bt-hl">SRES == SRES'</span>, the challenge-response succeeds and both devices are authenticated. This process can run in both directions for <strong>mutual authentication</strong>.
+  </div>
+
+  <!-- Eschenauer-Gligor Section -->
+  <hr class="divider"><span class="divider-label">New Topic</span>
+
+  <div class="eg-header section-anchor" id="eschenauer-gligor">
+    <h2>Eschenauer-Gligor Key Management</h2>
+    <p>reducing key exchanges in sensor networks</p>
+  </div>
+
+  <div class="eg-desc">
+    Each node selects <span class="eg-hl">m</span> keys from a key pool containing <span class="eg-hl">S</span> keys. Nodes that share at least one common key can communicate securely without a dedicated key exchange.
+  </div>
+
+  <div class="eg-stat">
+    When <span class="stat-val">S = 10,000</span> and <span class="stat-val">m = 75</span>, the probability of two nodes sharing a key is <span class="stat-val">≈ 50%</span> (random graph theory)
+  </div>
+
+  <!-- Node diagram -->
+  <div class="eg-diagram">
+    <div class="eg-node n-a">A</div>
+    <div class="eg-link connected">
+      <span class="eg-link-label">shared key</span>
+    </div>
+    <div class="eg-node n-e">E</div>
+    <div class="eg-link connected">
+      <span class="eg-link-label">shared key</span>
+    </div>
+    <div class="eg-node n-c">C</div>
+  </div>
+
+  <div class="eg-path-note">
+    Node <strong>A</strong> and <strong>C</strong> do not share a common key, but both share a key with node <strong>E</strong>. So <strong>A</strong> and <strong>C</strong> can still communicate securely through <span class="eg-hl">E</span> as an intermediate path-key node.
+  </div>
+
+  <!-- Microprocessor Attacks Section -->
+  <hr class="divider"><span class="divider-label">New Topic</span>
+
+  <div class="atk-header section-anchor" id="cpu-attacks">
+    <h2>Microprocessor Security Attacks</h2>
+    <p>two hardware-level exploitation techniques</p>
+  </div>
+
+  <div class="atk-grid">
+    <div class="atk-card plunder">
+      <div class="atk-name">Plundervolt</div>
+      <div class="atk-target">Exploits: Voltage Scaling</div>
+      <div class="atk-steps">
+        <div class="atk-step">
+          <span class="atk-num">01</span>
+          <span>Attacker (with root privileges) uses the CPU's <strong>software-controlled voltage interface</strong> to deliberately underpower the processor.</span>
+        </div>
+        <div class="atk-step">
+          <span class="atk-num">02</span>
+          <span>The voltage drop is timed during a sensitive computation inside a <strong>secure enclave</strong> (e.g. Intel SGX), causing <strong>bit flips or computation errors</strong>.</span>
+        </div>
+        <div class="atk-step">
+          <span class="atk-num">03</span>
+          <span>The attacker analyzes the <strong>faulty outputs</strong> to extract secret keys or bypass the enclave's integrity checks.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="atk-card meltdown">
+      <div class="atk-name">Meltdown</div>
+      <div class="atk-target">Exploits: Out-of-Order Execution</div>
+      <div class="atk-steps">
+        <div class="atk-step">
+          <span class="atk-num">01</span>
+          <span>The CPU <strong>speculatively reads kernel memory</strong> that the user process should not have access to.</span>
+        </div>
+        <div class="atk-step">
+          <span class="atk-num">02</span>
+          <span>The CPU eventually checks permissions and blocks the access, but the data has already been <strong>loaded into the CPU cache</strong>.</span>
+        </div>
+        <div class="atk-step">
+          <span class="atk-num">03</span>
+          <span>The attacker uses a <strong>cache timing side-channel</strong> to determine which data was loaded, effectively reading protected kernel memory from an unprivileged process.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TVR Assessment Section -->
+  <hr class="divider"><span class="divider-label">New Topic</span>
+
+  <div class="tvr-header section-anchor" id="tvr-assessment">
+    <h2>TVR Assessment: Autonomous Vehicle</h2>
+    <p>threat, vulnerability, and risk analysis</p>
+  </div>
+
+  <div class="tvr-grid">
+    <div class="tvr-col threat">
+      <div class="tvr-col-header">
+        <span class="tvr-icon">⚡</span>
+        <span class="tvr-label">Threats</span>
+      </div>
+      <div class="tvr-item"><strong>Cyberattack</strong> on the vehicle's communication network (V2X, OBD-II)</div>
+      <div class="tvr-item"><strong>Sensor spoofing</strong> via fake GPS signals or manipulated LiDAR data</div>
+      <div class="tvr-item"><strong>Unauthorized remote access</strong> to the vehicle's ECU firmware</div>
+    </div>
+
+    <div class="tvr-col vuln">
+      <div class="tvr-col-header">
+        <span class="tvr-icon">🕳️</span>
+        <span class="tvr-label">Vulnerabilities</span>
+      </div>
+      <div class="tvr-item"><strong>Unencrypted or weakly authenticated</strong> vehicle-to-infrastructure communication</div>
+      <div class="tvr-item"><strong>No input validation</strong> on sensor data, allowing spoofed inputs to be trusted</div>
+      <div class="tvr-item"><strong>Outdated firmware</strong> with known exploits due to infrequent OTA updates</div>
+    </div>
+
+    <div class="tvr-col risk">
+      <div class="tvr-col-header">
+        <span class="tvr-icon">🔥</span>
+        <span class="tvr-label">Risks</span>
+      </div>
+      <div class="tvr-item"><strong>Loss of vehicle control</strong> leading to passenger injury or fatality</div>
+      <div class="tvr-item"><strong>Vehicle rerouted or stolen</strong> through manipulated navigation data</div>
+      <div class="tvr-item"><strong>Large-scale fleet compromise</strong> if a shared firmware vulnerability is exploited across multiple vehicles</div>
+    </div>
+  </div>
+
+  <!-- Buffer Overflow Section -->
+  <hr class="divider"><span class="divider-label">New Topic</span>
+
+  <div class="bof-header section-anchor" id="buffer-overflow">
+    <h2>Buffer Overflow Attack</h2>
+  </div>
+
+  <div class="bof-flow">
+    <div class="bof-step">
+      <span class="bof-num">01</span>
+      <span>A program allocates a <strong>fixed-size buffer</strong> in memory but does not check the size of user input before writing to it.</span>
+    </div>
+    <div class="bof-step">
+      <span class="bof-num">02</span>
+      <span>The attacker sends <strong>input larger than the buffer</strong>, causing excess data to <strong>overwrite adjacent memory</strong>, including the function's <strong>return address</strong> on the stack.</span>
+    </div>
+    <div class="bof-step">
+      <span class="bof-num">03</span>
+      <span>The return address is replaced with a pointer to the attacker's injected <strong>malicious code (shellcode)</strong>.</span>
+    </div>
+    <div class="bof-step">
+      <span class="bof-num">04</span>
+      <span>When the function finishes, it jumps to the overwritten return address and <strong>executes the attacker's code</strong> instead of returning normally.</span>
+    </div>
+  </div>
+
+  <!-- Stack diagram -->
+  <div class="bof-diagram">
+    <div class="bof-stack">
+      <div class="bof-stack-label">Normal Stack</div>
+      <div class="bof-cell normal">Local Variables</div>
+      <div class="bof-cell normal">Buffer [ . . . . ]</div>
+      <div class="bof-cell ret">Return Address ✓</div>
+      <div class="bof-cell normal">Previous Frame</div>
+    </div>
+
+    <div class="bof-arrow-col">→</div>
+
+    <div class="bof-stack">
+      <div class="bof-stack-label">After Overflow</div>
+      <div class="bof-cell overflow">AAAAAAAAAAAAA</div>
+      <div class="bof-cell overflow">AAAAAAAAAAAAA</div>
+      <div class="bof-cell malicious">→ Shellcode Addr ✗</div>
+      <div class="bof-cell malicious">Injected Shellcode</div>
+    </div>
+  </div>
+
+  <!-- PKI Section -->
+  <hr class="divider"><span class="divider-label">New Topic</span>
+
+  <div class="pki-header section-anchor" id="pki">
+    <h2>Public Key Infrastructure (PKI)</h2>
+    <p>entities that enable trust in public-key systems</p>
+  </div>
+
+  <div class="pki-grid">
+    <div class="pki-card">
+      <span class="pki-icon">🏛️</span>
+      <div class="pki-name">Certificate Authority (CA)</div>
+      <div class="pki-def">Trusted entity that <strong>issues, signs, and revokes</strong> digital certificates. Verifies identity before binding a public key to it.</div>
+    </div>
+    <div class="pki-card">
+      <span class="pki-icon">📋</span>
+      <div class="pki-name">Registration Authority (RA)</div>
+      <div class="pki-def">Intermediary between users and the CA. Handles <strong>identity verification and certificate requests</strong> but does not issue certificates itself.</div>
+    </div>
+    <div class="pki-card">
+      <span class="pki-icon">🗄️</span>
+      <div class="pki-name">Certificate Repository</div>
+      <div class="pki-def">Public directory or database storing <strong>issued certificates and CRLs</strong>, accessible for anyone to retrieve and verify.</div>
+    </div>
+    <div class="pki-card">
+      <span class="pki-icon">👤</span>
+      <div class="pki-name">End Entity</div>
+      <div class="pki-def">The user, device, or service that <strong>holds a certificate</strong>. The party whose identity is bound to a public key.</div>
+    </div>
+    <div class="pki-card full-width">
+      <span class="pki-icon">✅</span>
+      <div class="pki-name">Validation Authority (VA)</div>
+      <div class="pki-def">Provides <strong>real-time certificate status checking</strong> (e.g. via OCSP) so relying parties can confirm if a certificate is still valid or revoked.</div>
+    </div>
+  </div>
+
+  <!-- UAV Security Violations Section -->
+  <hr class="divider"><span class="divider-label">New Topic</span>
+
+  <div class="uav-header section-anchor" id="uav-security">
+    <h2>UAV Security Violations</h2>
+    <p>examples across six security properties</p>
+  </div>
+
+  <div class="uav-grid">
+    <div class="uav-card conf">
+      <div class="uav-type">Confidentiality</div>
+      <div class="uav-desc">Attacker <strong>intercepts the encrypted video feed</strong> between UAV and ground station, gaining access to surveillance footage of a restricted area.</div>
+    </div>
+    <div class="uav-card integ">
+      <div class="uav-type">Integrity</div>
+      <div class="uav-desc">Attacker <strong>tampers with flight commands</strong> mid-transmission, altering waypoint coordinates so the UAV deviates from its intended path.</div>
+    </div>
+    <div class="uav-card avail">
+      <div class="uav-type">Availability</div>
+      <div class="uav-desc">A jammer <strong>floods the communication frequency</strong> with noise, causing the UAV to lose contact and triggering a forced landing or crash.</div>
+    </div>
+    <div class="uav-card auth">
+      <div class="uav-type">Authenticity</div>
+      <div class="uav-desc">Attacker <strong>spoofs the ground control station</strong>, sending fake commands the UAV accepts as legitimate because it cannot verify the true source.</div>
+    </div>
+    <div class="uav-card nonrep">
+      <div class="uav-type">Non-Repudiation</div>
+      <div class="uav-desc">Operator <strong>denies issuing a command</strong> that caused the drone to enter restricted airspace, and the system has no audit log to prove otherwise.</div>
+    </div>
+    <div class="uav-card priv">
+      <div class="uav-type">Privacy</div>
+      <div class="uav-desc">UAV camera <strong>captures footage of private residences</strong> during a routine mission, and data is stored without access controls, exposing residents' activities.</div>
+    </div>
+  </div>
+
+  <!-- Real-Time Constraints Section -->
+  <hr class="divider"><span class="divider-label">New Topic</span>
+
+  <div class="rtc-header section-anchor" id="real-time">
+    <h2>Hard vs Soft Real-Time Constraints</h2>
+  </div>
+
+  <div class="rtc-grid">
+    <div class="rtc-card hard">
+      <div class="rtc-label">Hard Real-Time</div>
+      <div class="rtc-def">Deadline must be met <strong>every single time</strong>. Missing it causes <strong>total system failure</strong> or catastrophic consequences.</div>
+      <div class="rtc-example">An airbag controller must deploy within milliseconds of a collision. If the deadline is missed, the airbag is useless.</div>
+      <div class="rtc-sec-label">Security Implication</div>
+      <div class="rtc-sec">Attacker <strong>floods the airbag sensor network</strong> with fake data (DoS). The ECU is too busy processing junk to respond within the hard deadline during a real collision, causing the <strong>airbag to fail to deploy</strong>.</div>
+    </div>
+
+    <div class="rtc-card soft">
+      <div class="rtc-label">Soft Real-Time</div>
+      <div class="rtc-def">Deadline should be met, but occasional misses are <strong>tolerable</strong>. Results in <strong>degraded performance</strong>, not failure.</div>
+      <div class="rtc-example">A video stream should render at 30fps. A few dropped frames cause minor stuttering but the system continues functioning.</div>
+      <div class="rtc-sec-label">Security Implication</div>
+      <div class="rtc-sec">Attacker causes <strong>resource exhaustion</strong> on a security camera's feed processing. Footage becomes laggy or frames drop, potentially <strong>missing critical moments</strong> during a break-in. System works, but effectiveness is reduced.</div>
+    </div>
+  </div>
+
+  <!-- Mealy FSM Section -->
+  <hr class="divider"><span class="divider-label">New Topic</span>
+
+  <div class="fsm-header section-anchor" id="mealy-fsm">
+    <h2>Mealy FSM: Smart Air Purifier</h2>
+    <p>output depends on current state + input</p>
+  </div>
+
+  <!-- State Diagram -->
+  <div class="fsm-diagram">
+    <div class="fsm-state s-off">OFF</div>
+    <div class="fsm-state s-on">ON</div>
+    <div class="fsm-state s-idle">IDLE</div>
+
+    <svg class="fsm-svg" viewBox="0 0 820 380" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <marker id="ah-red" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#f87171"/>
+        </marker>
+        <marker id="ah-green" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#4ade80"/>
+        </marker>
+        <marker id="ah-yellow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#fbbf24"/>
+        </marker>
+        <marker id="ah-dim" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#8b8fa3"/>
+        </marker>
+      </defs>
+
+      <!-- Self-loops -->
+      <!-- OFF self-loop (left side) -->
+      <path d="M 50,155 C 5,120 5,210 50,195" class="arrow-line" stroke="#f87171" marker-end="url(#ah-red)"/>
+      <text x="0" y="180" class="input-label" fill="#f87171">00/0</text>
+
+      <!-- ON self-loop (top) -->
+      <path d="M 390,25 C 370,-15 450,-15 430,25" class="arrow-line" stroke="#4ade80" marker-end="url(#ah-green)"/>
+      <text x="393" y="0" class="input-label" fill="#4ade80">11/1</text>
+
+      <!-- IDLE self-loop (right side) -->
+      <path d="M 770,155 C 815,120 815,210 770,195" class="arrow-line" stroke="#fbbf24" marker-end="url(#ah-yellow)"/>
+      <text x="785" y="180" class="input-label" fill="#fbbf24">01,10/1</text>
+
+      <!-- OFF → ON (left-up to top-center) -->
+      <path d="M 100,155 C 160,80 300,40 385,55" class="arrow-line" stroke="#4ade80" marker-end="url(#ah-green)"/>
+      <text x="190" y="70" class="input-label" fill="#4ade80">11/1</text>
+
+      <!-- ON → OFF (top-center down to left) -->
+      <path d="M 385,85 C 300,120 160,140 105,170" class="arrow-line" stroke="#f87171" marker-end="url(#ah-red)"/>
+      <text x="200" y="130" class="input-label" fill="#f87171">00/0</text>
+
+      <!-- OFF → IDLE (bottom path left to right) -->
+      <path d="M 120,210 C 250,300 550,300 700,210" class="arrow-line" stroke="#fbbf24" marker-end="url(#ah-yellow)"/>
+      <text x="370" y="310" class="input-label" fill="#fbbf24">01,10/1</text>
+
+      <!-- IDLE → OFF (bottom return) -->
+      <path d="M 700,195 C 560,260 260,260 120,195" class="arrow-line" stroke="#f87171" marker-end="url(#ah-red)"/>
+      <text x="370" y="268" class="input-label" fill="#f87171">00/0</text>
+
+      <!-- ON → IDLE (top-right to right) -->
+      <path d="M 445,70 C 540,50 680,100 725,155" class="arrow-line" stroke="#fbbf24" marker-end="url(#ah-yellow)"/>
+      <text x="600" y="75" class="input-label" fill="#fbbf24">01,10/1</text>
+
+      <!-- IDLE → ON (right up to top) -->
+      <path d="M 720,150 C 670,100 530,55 445,55" class="arrow-line" stroke="#4ade80" marker-end="url(#ah-green)"/>
+      <text x="600" y="115" class="input-label" fill="#4ade80">11/1</text>
+    </svg>
+  </div>
+
+  <!-- Transition Table -->
+  <table class="fsm-table">
+    <thead>
+      <tr>
+        <th>Current State</th>
+        <th>Input</th>
+        <th>Next State</th>
+        <th>Output (Green Light)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="state-off">OFF</td><td>00</td><td class="state-off">OFF</td><td class="out-off">0 (off)</td></tr>
+      <tr><td class="state-off">OFF</td><td>01, 10</td><td class="state-idle">IDLE</td><td class="out-on">1 (on)</td></tr>
+      <tr><td class="state-off">OFF</td><td>11</td><td class="state-on">ON</td><td class="out-on">1 (on)</td></tr>
+      <tr><td class="state-on">ON</td><td>00</td><td class="state-off">OFF</td><td class="out-off">0 (off)</td></tr>
+      <tr><td class="state-on">ON</td><td>01, 10</td><td class="state-idle">IDLE</td><td class="out-on">1 (on)</td></tr>
+      <tr><td class="state-on">ON</td><td>11</td><td class="state-on">ON</td><td class="out-on">1 (on)</td></tr>
+      <tr><td class="state-idle">IDLE</td><td>00</td><td class="state-off">OFF</td><td class="out-off">0 (off)</td></tr>
+      <tr><td class="state-idle">IDLE</td><td>01, 10</td><td class="state-idle">IDLE</td><td class="out-on">1 (on)</td></tr>
+      <tr><td class="state-idle">IDLE</td><td>11</td><td class="state-on">ON</td><td class="out-on">1 (on)</td></tr>
+    </tbody>
+  </table>
+
+  <!-- HSM Section -->
+  <hr class="divider"><span class="divider-label">New Topic</span>
+
+  <div class="hsm-header section-anchor" id="hsm">
+    <h2>Hardware Security Modules (HSM)</h2>
+  </div>
+
+  <div class="hsm-grid">
+    <div class="hsm-card">
+      <span class="hsm-icon">🌐</span>
+      <div class="hsm-name">Network Attached HSM</div>
+      <div class="hsm-row adv"><span class="adv-label">Advantage:</span> Shared access across many servers and applications, scalable for enterprise use.</div>
+      <div class="hsm-row dis"><span class="dis-label">Disadvantage:</span> Introduces network latency and is exposed to network-based attacks.</div>
+    </div>
+
+    <div class="hsm-card">
+      <span class="hsm-icon">🔌</span>
+      <div class="hsm-name">PCIe Embedded HSM</div>
+      <div class="hsm-row adv"><span class="adv-label">Advantage:</span> Fastest performance due to direct hardware bus communication with minimal latency.</div>
+      <div class="hsm-row dis"><span class="dis-label">Disadvantage:</span> Tied to a single server, scaling requires additional units per machine.</div>
+    </div>
+
+    <div class="hsm-card">
+      <span class="hsm-icon">🔑</span>
+      <div class="hsm-name">USB / Portable HSM</div>
+      <div class="hsm-row adv"><span class="adv-label">Advantage:</span> Highly portable and affordable, easy to move between machines for tasks like code signing.</div>
+      <div class="hsm-row dis"><span class="dis-label">Disadvantage:</span> Limited processing power and throughput, not suited for high-volume enterprise workloads.</div>
+    </div>
+
+    <div class="hsm-card">
+      <span class="hsm-icon">☁️</span>
+      <div class="hsm-name">Cloud HSM</div>
+      <div class="hsm-row adv"><span class="adv-label">Advantage:</span> No physical hardware to maintain, easily scalable on demand, accessible from anywhere.</div>
+      <div class="hsm-row dis"><span class="dis-label">Disadvantage:</span> Keys managed in a third-party environment, may not meet strict compliance requirements, relies on internet connectivity.</div>
+    </div>
+  </div>
+
+  <!-- WEP vs WPA Section -->
+  <hr class="divider"><span class="divider-label">New Topic</span>
+
+  <div class="wifi-header section-anchor" id="wep-vs-wpa">
+    <h2><span class="wep-hl">WEP</span> <span class="vs-hl">vs</span> <span class="wpa-hl">WPA/WPA2</span></h2>
+  </div>
+
+  <div class="wifi-row">
+    <div class="wifi-card wep">
+      <div class="wifi-label">WEP</div>
+      <div class="wifi-section-tag">Encryption</div>
+      <div class="wifi-text"><strong>RC4</strong> stream cipher with a static <strong>40-bit or 104-bit key</strong>. A <strong>24-bit IV</strong> is prepended per packet, but the small IV space causes repeats quickly, allowing attackers to crack the key.</div>
+      <div class="wifi-section-tag">Key Distribution</div>
+      <div class="wifi-text">The <strong>same static key</strong> is shared across all devices on the network and rarely changes.</div>
+    </div>
+
+    <div class="wifi-card wpa">
+      <div class="wifi-label">WPA / WPA2</div>
+      <div class="wifi-section-tag">Encryption</div>
+      <div class="wifi-text">WPA uses <strong>TKIP</strong> (still RC4 but with unique per-packet keys and a <strong>48-bit IV</strong>). WPA2 upgraded to <strong>AES-CCMP</strong>, a much stronger block cipher.</div>
+      <div class="wifi-section-tag">Key Distribution</div>
+      <div class="wifi-text">A <strong>4-way handshake</strong> derives unique session keys (PTK) from a Pre-Shared Key (PSK) or via <strong>802.1X/RADIUS</strong> for enterprise. No device shares the same encryption key.</div>
+    </div>
+  </div>
+
+  <div class="wifi-verdict">
+    <strong>WEP:</strong> static shared key + weak encryption = easily cracked. <strong>WPA/WPA2:</strong> dynamic per-session keys + stronger encryption = significantly more secure.
+  </div>
+
+  <!-- Timing Attack Section -->
+  <hr class="divider"><span class="divider-label">New Topic</span>
+
+  <div class="ta-header section-anchor" id="timing-attack">
+    <h2>Timing Attack</h2>
+  </div>
+
+  <div class="ta-how">
+    <div class="ta-label">How It Works</div>
+    <div class="ta-steps">
+      <div class="ta-step">
+        <span class="ta-num">01</span>
+        <span>Cryptographic operations take <strong>different amounts of time</strong> depending on the input data.</span>
+      </div>
+      <div class="ta-step">
+        <span class="ta-num">02</span>
+        <span>The attacker repeatedly sends different inputs and <strong>precisely measures response times</strong>.</span>
+      </div>
+      <div class="ta-step">
+        <span class="ta-num">03</span>
+        <span>By analyzing time variations, the attacker <strong>deduces secret information</strong> like encryption keys or passwords.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="ta-example">
+    <div class="ta-ex-label">Example: Password Comparison (character by character)</div>
+    <div class="ta-bar-row">
+      <span class="ta-bar-label">"AAAA"</span>
+      <div class="ta-bar short">fail at 1st</div>
+      <span class="ta-bar-time">0.2ms</span>
+    </div>
+    <div class="ta-bar-row">
+      <span class="ta-bar-label">"Pa__"</span>
+      <div class="ta-bar medium">fail at 3rd</div>
+      <span class="ta-bar-time">0.6ms</span>
+    </div>
+    <div class="ta-bar-row">
+      <span class="ta-bar-label">"Pass"</span>
+      <div class="ta-bar long">all match ✓</div>
+      <span class="ta-bar-time">1.0ms</span>
+    </div>
+  </div>
+
+  <div class="ta-prevent">
+    <div class="ta-prev-label">Prevention</div>
+    <div class="ta-prev-text">Use <strong>constant-time algorithms</strong> that take the same amount of time regardless of input. For password comparison, always compare <strong>every character</strong> even if a mismatch is found early. Adding random delays can also help but is less reliable than true constant-time implementation.</div>
+  </div>
+
+  <div class="footer">expandable cheat sheet &middot; more topics coming</div>
+
+</div>
+
+<!-- Score Bar -->
+<div class="score-bar" id="scoreBar">
+  <span class="score-item total" id="scoreTotal">0/18 answered</span>
+  <span class="score-item right" id="scoreRight">✓ 0</span>
+  <span class="score-item wrong-score" id="scoreWrong">✗ 0</span>
+  <span class="score-item pending" id="scorePending">… 18 left</span>
+  <button class="reset-btn" onclick="resetTest()">Reset</button>
+</div>
+
+<script>
+const topics = [
+  { id: 'sig-vs-mac', question: 'Explain the difference between Digital Signatures and MACs. Cover key type, non-repudiation, and who can verify.' },
+  { id: 'privacy-types', question: 'Name and explain the 4 types of individual privacy (Internal, External, Territorial, Social) with an example of each.' },
+  { id: 'secure-printing', question: 'List and briefly explain at least 5 secure printing technologies including Guilloché.' },
+  { id: 'vernam-cipher', question: 'Explain how the Vernam Cipher (One-Time Pad) works, why it achieves perfect secrecy, and its practical limitations.' },
+  { id: 'cps-robustness', question: 'Define the 5 CPS robustness criteria: R(t), M(d), A(t), Security, and Safety.' },
+  { id: 'diffie-hellman', question: 'Walk through the Diffie-Hellman key exchange step by step using Alice and Bob. Why can an eavesdropper not compute the shared secret?' },
+  { id: 'bluetooth-init', question: 'Explain the establishment of K_init in Bluetooth and how it is verified through the challenge-response scheme.' },
+  { id: 'eschenauer-gligor', question: 'How does the Eschenauer-Gligor scheme reduce key exchanges? What happens when two nodes do not share a common key?' },
+  { id: 'cpu-attacks', question: 'Explain the working principles of Plundervolt and Meltdown attacks on microprocessors.' },
+  { id: 'tvr-assessment', question: 'Perform a Threat-Vulnerability-Risk assessment for an autonomous vehicle with at least 3 factors in each category.' },
+  { id: 'buffer-overflow', question: 'Explain how a buffer overflow attack works, from the oversized input to shellcode execution.' },
+  { id: 'pki', question: 'Name and describe the 5 entities in a Public Key Infrastructure.' },
+  { id: 'uav-security', question: 'Give an example of a UAV security violation for each: Confidentiality, Integrity, Availability, Authenticity, Non-Repudiation, Privacy.' },
+  { id: 'real-time', question: 'Compare hard vs soft real-time constraints and give a security implication example for each.' },
+  { id: 'mealy-fsm', question: 'Design the Mealy FSM for the smart air purifier. Define states, transitions for inputs 00/01/10/11, and output logic.' },
+  { id: 'hsm', question: 'Compare the 4 types of HSMs (Network, PCIe, USB, Cloud) with an advantage and disadvantage for each.' },
+  { id: 'wep-vs-wpa', question: 'Compare WEP and WPA/WPA2 in terms of encryption method and key distribution.' },
+  { id: 'timing-attack', question: 'Explain how a timing attack works and how it can be prevented.' }
+];
+
+let testMode = false;
+let scores = {};
+
+function toggleTestMode() {
+  testMode = !testMode;
+  const btn = document.getElementById('testModeBtn');
+  const body = document.body;
+  const scoreBar = document.getElementById('scoreBar');
+
+  if (testMode) {
+    btn.classList.add('active');
+    btn.textContent = '📖 Study Mode';
+    body.classList.add('test-mode');
+    scoreBar.classList.add('visible');
+    buildTestOverlays();
+    markHideableSections();
+  } else {
+    btn.textContent = '🧪 Test Mode';
+    btn.classList.remove('active');
+    body.classList.remove('test-mode');
+    scoreBar.classList.remove('visible');
+    removeHideableMarkers();
+    removeTestOverlays();
+  }
+}
+
+function buildTestOverlays() {
+  topics.forEach(topic => {
+    const anchor = document.getElementById(topic.id);
+    if (!anchor) return;
+
+    // Check if overlay already exists
+    if (document.getElementById('test-' + topic.id)) return;
+
+    const overlay = document.createElement('div');
+    overlay.className = 'test-overlay visible';
+    overlay.id = 'test-' + topic.id;
+    overlay.innerHTML = `
+      <div class="test-prompt">Test Yourself</div>
+      <div class="test-question">${topic.question}</div>
+      <textarea placeholder="Write your answer here..."></textarea>
+      <div class="test-btn-row">
+        <button class="test-reveal-btn" onclick="revealSection('${topic.id}')">Reveal Answer</button>
+        <button class="test-self-btn correct" onclick="markScore('${topic.id}', 'correct')">✓ Got it</button>
+        <button class="test-self-btn wrong" onclick="markScore('${topic.id}', 'wrong')">✗ Missed it</button>
+        <button class="test-self-btn retry" onclick="retrySection('${topic.id}')">↺ Retry</button>
+      </div>
+    `;
+
+    // Insert after the section header
+    anchor.parentNode.insertBefore(overlay, anchor.nextSibling);
+  });
+  updateScoreBar();
+}
+
+function markHideableSections() {
+  topics.forEach(topic => {
+    const anchor = document.getElementById(topic.id);
+    if (!anchor) return;
+    let el = anchor.nextElementSibling;
+    while (el) {
+      if (el.classList.contains('test-overlay')) {
+        el = el.nextElementSibling;
+        continue;
+      }
+      if (el.classList.contains('divider') || el.classList.contains('footer')) break;
+      // Check if it's another section header
+      if (el.id && topics.some(t => t.id === el.id)) break;
+      el.classList.add('hideable');
+      el = el.nextElementSibling;
+    }
+  });
+}
+
+function removeHideableMarkers() {
+  document.querySelectorAll('.hideable').forEach(el => {
+    el.classList.remove('hideable');
+  });
+}
+
+function removeTestOverlays() {
+  document.querySelectorAll('.test-overlay').forEach(el => el.remove());
+}
+
+function revealSection(topicId) {
+  // Show the content for this section
+  const anchor = document.getElementById(topicId);
+  if (!anchor) return;
+  let el = anchor.nextElementSibling;
+  while (el) {
+    if (el.classList.contains('test-overlay')) {
+      el = el.nextElementSibling;
+      continue;
+    }
+    if (el.classList.contains('divider') || el.classList.contains('footer')) break;
+    if (el.id && topics.some(t => t.id === el.id)) break;
+    el.classList.remove('hideable');
+    el = el.nextElementSibling;
+  }
+}
+
+function markScore(topicId, result) {
+  scores[topicId] = result;
+  const overlay = document.getElementById('test-' + topicId);
+  if (overlay) {
+    overlay.style.borderColor = result === 'correct' ? 'rgba(74, 222, 128, 0.4)' : 'rgba(248, 113, 113, 0.4)';
+    overlay.style.background = result === 'correct' ? 'rgba(74, 222, 128, 0.05)' : 'rgba(248, 113, 113, 0.05)';
+  }
+  revealSection(topicId);
+  updateScoreBar();
+}
+
+function retrySection(topicId) {
+  delete scores[topicId];
+  const overlay = document.getElementById('test-' + topicId);
+  if (overlay) {
+    overlay.style.borderColor = '';
+    overlay.style.background = '';
+    const textarea = overlay.querySelector('textarea');
+    if (textarea) textarea.value = '';
+  }
+  // Re-hide the section content
+  const anchor = document.getElementById(topicId);
+  if (!anchor) return;
+  let el = anchor.nextElementSibling;
+  while (el) {
+    if (el.classList.contains('test-overlay')) {
+      el = el.nextElementSibling;
+      continue;
+    }
+    if (el.classList.contains('divider') || el.classList.contains('footer')) break;
+    if (el.id && topics.some(t => t.id === el.id)) break;
+    el.classList.add('hideable');
+    el = el.nextElementSibling;
+  }
+  updateScoreBar();
+}
+
+function resetTest() {
+  scores = {};
+  topics.forEach(topic => {
+    const overlay = document.getElementById('test-' + topic.id);
+    if (overlay) {
+      overlay.style.borderColor = '';
+      overlay.style.background = '';
+      const textarea = overlay.querySelector('textarea');
+      if (textarea) textarea.value = '';
+    }
+  });
+  markHideableSections();
+  updateScoreBar();
+}
+
+function updateScoreBar() {
+  const total = topics.length;
+  const answered = Object.keys(scores).length;
+  const correct = Object.values(scores).filter(s => s === 'correct').length;
+  const wrong = Object.values(scores).filter(s => s === 'wrong').length;
+  const pending = total - answered;
+
+  document.getElementById('scoreTotal').textContent = answered + '/' + total + ' answered';
+  document.getElementById('scoreRight').textContent = '✓ ' + correct;
+  document.getElementById('scoreWrong').textContent = '✗ ' + wrong;
+  document.getElementById('scorePending').textContent = '… ' + pending + ' left';
+}
+</script>
+</body>
+</html>
