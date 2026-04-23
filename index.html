@@ -2360,6 +2360,956 @@
     opacity: 0.5;
   }
 
+  /* Bluetooth Vulnerabilities Section */
+  .btv-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .btv-header h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #60a5fa;
+  }
+
+  .btv-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .btv-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.1rem 1.2rem;
+    display: grid;
+    grid-template-columns: 2.8rem 1fr;
+    gap: 0.85rem;
+    align-items: start;
+  }
+
+  .btv-card .btv-icon { font-size: 1.4rem; margin-top: 0.1rem; }
+
+  .btv-card .btv-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #60a5fa;
+    margin-bottom: 0.2rem;
+  }
+
+  .btv-card .btv-desc {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    line-height: 1.55;
+    margin-bottom: 0.4rem;
+  }
+
+  .btv-card .btv-desc strong { color: var(--text); font-weight: 600; }
+
+  .btv-card .btv-fix {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+    padding-left: 0.6rem;
+    border-left: 2px solid rgba(74, 222, 128, 0.3);
+  }
+
+  .btv-card .btv-fix strong { color: var(--text); font-weight: 600; }
+
+  .btv-card .btv-fix-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: #4ade80;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  @media (max-width: 700px) {
+    .btv-card { grid-template-columns: 1fr; }
+  }
+
+  /* Pairwise vs Group Keying Section */
+  .pgk-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .pgk-header h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+
+  .pgk-header h2 .pw-hl { color: #38bdf8; }
+  .pgk-header h2 .vs-hl { color: var(--text-dim); font-size: 1rem; margin: 0 0.3rem; }
+  .pgk-header h2 .gk-hl { color: #f472b6; }
+
+  .pgk-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .pgk-card {
+    border-radius: 12px;
+    padding: 1.25rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pgk-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+  }
+
+  .pgk-card.pw {
+    background: rgba(56, 189, 248, 0.05);
+    border: 1px solid rgba(56, 189, 248, 0.18);
+  }
+  .pgk-card.pw::before { background: #38bdf8; }
+
+  .pgk-card.gk {
+    background: rgba(244, 114, 182, 0.05);
+    border: 1px solid rgba(244, 114, 182, 0.18);
+  }
+  .pgk-card.gk::before { background: #f472b6; }
+
+  .pgk-card .pgk-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 0.6rem;
+  }
+
+  .pgk-card.pw .pgk-label { color: #38bdf8; }
+  .pgk-card.gk .pgk-label { color: #f472b6; }
+
+  .pgk-card .pgk-row-item {
+    font-size: 0.8rem;
+    line-height: 1.55;
+    margin-bottom: 0.45rem;
+    padding-left: 0.6rem;
+  }
+
+  .pgk-card .pgk-row-item:last-child { margin-bottom: 0; }
+
+  .pgk-card .pgk-row-item.adv {
+    border-left: 2px solid rgba(74, 222, 128, 0.35);
+    color: var(--text-dim);
+  }
+
+  .pgk-card .pgk-row-item.dis {
+    border-left: 2px solid rgba(248, 113, 113, 0.35);
+    color: var(--text-dim);
+  }
+
+  .pgk-card .pgk-row-item strong { color: var(--text); font-weight: 600; }
+
+  .pgk-card .pgk-row-item .adv-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: #4ade80;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .pgk-card .pgk-row-item .dis-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: #f87171;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  @media (max-width: 700px) {
+    .pgk-row { grid-template-columns: 1fr; }
+  }
+
+  /* RSA Example Section */
+  .rsa-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .rsa-header h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fb923c;
+  }
+
+  .rsa-header p {
+    color: var(--text-dim);
+    font-size: 0.78rem;
+    margin-top: 0.2rem;
+  }
+
+  .rsa-phase-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.8px;
+    color: var(--text-dim);
+    margin-bottom: 0.6rem;
+    padding-left: 0.25rem;
+  }
+
+  .rsa-steps {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.15rem 1.25rem;
+    margin-bottom: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .rsa-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-size: 0.82rem;
+    line-height: 1.55;
+    color: var(--text-dim);
+  }
+
+  .rsa-step strong { color: var(--text); font-weight: 600; }
+
+  .rsa-step .rsa-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #fb923c;
+    background: rgba(251, 146, 60, 0.1);
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .rsa-keys {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .rsa-key-box {
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .rsa-key-box.pub {
+    background: rgba(74, 222, 128, 0.06);
+    border: 1px solid rgba(74, 222, 128, 0.18);
+  }
+
+  .rsa-key-box.priv {
+    background: rgba(248, 113, 113, 0.06);
+    border: 1px solid rgba(248, 113, 113, 0.18);
+  }
+
+  .rsa-key-box .rsa-key-label {
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.25rem;
+  }
+
+  .rsa-key-box.pub .rsa-key-label { color: #4ade80; }
+  .rsa-key-box.priv .rsa-key-label { color: #f87171; }
+
+  .rsa-key-box .rsa-key-val {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .rsa-calc {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .rsa-calc-box {
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+  }
+
+  .rsa-calc-box.enc {
+    background: rgba(56, 189, 248, 0.05);
+    border: 1px solid rgba(56, 189, 248, 0.18);
+  }
+
+  .rsa-calc-box.dec {
+    background: rgba(167, 139, 250, 0.05);
+    border: 1px solid rgba(167, 139, 250, 0.18);
+  }
+
+  .rsa-calc-box .rsa-calc-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+  }
+
+  .rsa-calc-box.enc .rsa-calc-label { color: #38bdf8; }
+  .rsa-calc-box.dec .rsa-calc-label { color: #a78bfa; }
+
+  .rsa-calc-box .rsa-calc-line {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    line-height: 1.8;
+  }
+
+  .rsa-calc-box .rsa-calc-line .rsa-res {
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  @media (max-width: 700px) {
+    .rsa-keys, .rsa-calc { grid-template-columns: 1fr; }
+  }
+
+  /* Vehicle Privacy Section */
+  .vp-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .vp-header h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #c084fc;
+  }
+
+  .vp-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .vp-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.15rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .vp-card .vp-icon { font-size: 1.3rem; }
+
+  .vp-card .vp-violation-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #f87171;
+    background: rgba(248, 113, 113, 0.08);
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    display: inline-block;
+    width: fit-content;
+  }
+
+  .vp-card .vp-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #c084fc;
+  }
+
+  .vp-card .vp-desc {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  .vp-card .vp-desc strong { color: var(--text); font-weight: 600; }
+
+  .vp-card .vp-remedy-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #4ade80;
+    background: rgba(74, 222, 128, 0.08);
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    display: inline-block;
+    width: fit-content;
+  }
+
+  .vp-card .vp-remedy {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+    padding-left: 0.6rem;
+    border-left: 2px solid rgba(74, 222, 128, 0.25);
+  }
+
+  .vp-card .vp-remedy strong { color: var(--text); font-weight: 600; }
+
+  @media (max-width: 700px) {
+    .vp-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Kerckhoffs' Principle Section */
+  .kp-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .kp-header h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #94a3b8;
+  }
+
+  .kp-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .kp-card .kp-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #94a3b8;
+    margin-bottom: 0.6rem;
+  }
+
+  .kp-card .kp-text {
+    font-size: 0.85rem;
+    color: var(--text);
+    line-height: 1.65;
+  }
+
+  .kp-card .kp-text strong { font-weight: 700; }
+
+  .kp-card .kp-text .kp-hl {
+    color: #94a3b8;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+  }
+
+  .kp-implication {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .kp-box {
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
+    text-align: center;
+  }
+
+  .kp-box.kp-public {
+    background: rgba(74, 222, 128, 0.05);
+    border: 1px solid rgba(74, 222, 128, 0.18);
+  }
+
+  .kp-box.kp-secret {
+    background: rgba(248, 113, 113, 0.05);
+    border: 1px solid rgba(248, 113, 113, 0.18);
+  }
+
+  .kp-box .kp-box-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.3rem;
+  }
+
+  .kp-box.kp-public .kp-box-label { color: #4ade80; }
+  .kp-box.kp-secret .kp-box-label { color: #f87171; }
+
+  .kp-box .kp-box-text {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  @media (max-width: 700px) {
+    .kp-implication { grid-template-columns: 1fr; }
+  }
+
+  /* Attack Surface Section */
+  .asf-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .asf-header h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #f59e0b;
+  }
+
+  .asf-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .asf-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+    display: grid;
+    grid-template-columns: 2.8rem 1fr;
+    gap: 0.85rem;
+    align-items: start;
+    transition: border-color 0.2s;
+  }
+
+  .asf-card:hover { border-color: rgba(245, 158, 11, 0.3); }
+
+  .asf-card .asf-icon { font-size: 1.4rem; margin-top: 0.1rem; }
+
+  .asf-card .asf-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #f59e0b;
+    margin-bottom: 0.2rem;
+  }
+
+  .asf-card .asf-def {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    line-height: 1.55;
+    margin-bottom: 0.35rem;
+  }
+
+  .asf-card .asf-def strong { color: var(--text); font-weight: 600; }
+
+  .asf-card .asf-example {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+    padding-left: 0.6rem;
+    border-left: 2px solid rgba(245, 158, 11, 0.25);
+  }
+
+  @media (max-width: 700px) {
+    .asf-card { grid-template-columns: 1fr; }
+  }
+
+  /* IoT CPS Security Section */
+  .iot-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .iot-header h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #f472b6;
+  }
+
+  .iot-header p {
+    color: var(--text-dim);
+    font-size: 0.78rem;
+    margin-top: 0.2rem;
+  }
+
+  .iot-example {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    margin-bottom: 0.75rem;
+    text-align: center;
+  }
+
+  .iot-example .iot-ex-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-dim);
+    margin-bottom: 0.4rem;
+  }
+
+  .iot-example .iot-ex-text {
+    font-size: 0.82rem;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .iot-example .iot-ex-text strong { font-weight: 600; }
+  .iot-example .iot-hl { color: #f472b6; font-weight: 600; }
+
+  .iot-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .iot-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+    border-left: 3px solid transparent;
+    transition: border-color 0.2s;
+  }
+
+  .iot-card:hover { border-color: rgba(244, 114, 182, 0.3); }
+
+  .iot-card .iot-type {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.35rem;
+  }
+
+  .iot-card .iot-desc {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  .iot-card .iot-desc strong { color: var(--text); font-weight: 600; }
+
+  .iot-card.iot-conf { border-left-color: #f87171; }
+  .iot-card.iot-conf .iot-type { color: #f87171; }
+
+  .iot-card.iot-integ { border-left-color: #fbbf24; }
+  .iot-card.iot-integ .iot-type { color: #fbbf24; }
+
+  .iot-card.iot-avail { border-left-color: #fb923c; }
+  .iot-card.iot-avail .iot-type { color: #fb923c; }
+
+  .iot-card.iot-auth { border-left-color: #a78bfa; }
+  .iot-card.iot-auth .iot-type { color: #a78bfa; }
+
+  .iot-card.iot-nonrep { border-left-color: #38bdf8; }
+  .iot-card.iot-nonrep .iot-type { color: #38bdf8; }
+
+  .iot-card.iot-priv { border-left-color: #e879f9; }
+  .iot-card.iot-priv .iot-type { color: #e879f9; }
+
+  @media (max-width: 700px) {
+    .iot-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Keyless Entry Attack Section */
+  .kea-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .kea-header h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #f59e0b;
+  }
+
+  .kea-attack {
+    background: rgba(248, 113, 113, 0.05);
+    border: 1px solid rgba(248, 113, 113, 0.18);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .kea-attack .kea-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #f87171;
+    margin-bottom: 0.7rem;
+  }
+
+  .kea-attack .kea-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .kea-attack .kea-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    font-size: 0.82rem;
+    line-height: 1.55;
+    color: var(--text-dim);
+  }
+
+  .kea-attack .kea-step strong { color: var(--text); font-weight: 600; }
+
+  .kea-attack .kea-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #f87171;
+    background: rgba(248, 113, 113, 0.1);
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* Relay diagram */
+  .kea-diagram {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 0.75rem;
+    padding: 1rem 0;
+  }
+
+  .kea-entity {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .kea-entity .kea-icon { font-size: 1.6rem; }
+
+  .kea-entity .kea-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--text-dim);
+  }
+
+  .kea-relay-link {
+    width: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.1rem;
+  }
+
+  .kea-relay-link .kea-signal {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem;
+    font-weight: 600;
+    color: #f87171;
+  }
+
+  .kea-relay-link .kea-arrow {
+    font-size: 1rem;
+    color: #f87171;
+  }
+
+  .kea-remedy {
+    background: rgba(74, 222, 128, 0.05);
+    border: 1px solid rgba(74, 222, 128, 0.15);
+    border-radius: 12px;
+    padding: 1.1rem 1.2rem;
+  }
+
+  .kea-remedy .kea-rem-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #4ade80;
+    margin-bottom: 0.5rem;
+  }
+
+  .kea-remedy .kea-rem-text {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    line-height: 1.55;
+  }
+
+  .kea-remedy .kea-rem-text strong { color: var(--text); font-weight: 600; }
+
+  /* MAC+Encryption Modes Section */
+  .macenc-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .macenc-header h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #818cf8;
+  }
+
+  .macenc-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .macenc-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.1rem 1.2rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.85rem;
+    align-items: start;
+  }
+
+  .macenc-card .macenc-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.2rem 0.5rem;
+    border-radius: 5px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .macenc-card.etm .macenc-badge { background: rgba(74, 222, 128, 0.12); color: #4ade80; }
+  .macenc-card.mte .macenc-badge { background: rgba(251, 191, 36, 0.12); color: #fbbf24; }
+  .macenc-card.eam .macenc-badge { background: rgba(248, 113, 113, 0.12); color: #f87171; }
+
+  .macenc-card .macenc-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #818cf8;
+    margin-bottom: 0.25rem;
+  }
+
+  .macenc-card .macenc-flow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    background: var(--surface-alt);
+    padding: 0.3rem 0.6rem;
+    border-radius: 5px;
+    display: inline-block;
+    margin-bottom: 0.35rem;
+  }
+
+  .macenc-card .macenc-flow .arrow { color: #818cf8; }
+
+  .macenc-card .macenc-desc {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    line-height: 1.55;
+  }
+
+  .macenc-card .macenc-desc strong { color: var(--text); font-weight: 600; }
+
+  .macenc-card .macenc-verdict {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 600;
+    margin-top: 0.3rem;
+    display: inline-block;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+  }
+
+  .macenc-card.etm .macenc-verdict { color: #4ade80; background: rgba(74, 222, 128, 0.08); }
+  .macenc-card.mte .macenc-verdict { color: #fbbf24; background: rgba(251, 191, 36, 0.08); }
+  .macenc-card.eam .macenc-verdict { color: #f87171; background: rgba(248, 113, 113, 0.08); }
+
+  /* Digital Signature Protocol Section */
+  .dsp-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .dsp-header h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #2dd4bf;
+  }
+
+  .dsp-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .dsp-step {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.85rem 1.1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    font-size: 0.82rem;
+    line-height: 1.55;
+    color: var(--text-dim);
+  }
+
+  .dsp-step strong { color: var(--text); font-weight: 600; }
+
+  .dsp-step .dsp-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #2dd4bf;
+    background: rgba(45, 212, 191, 0.1);
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .dsp-step .dsp-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #2dd4bf;
+    margin-bottom: 0.15rem;
+  }
+
   /* Test Mode */
   .test-mode-btn {
     background: rgba(251, 191, 36, 0.12) !important;
@@ -2568,6 +3518,16 @@
         <a href="#hsm">HSM Types</a>
         <a href="#wep-vs-wpa">WEP vs WPA</a>
         <a href="#timing-attack">Timing Attack</a>
+        <a href="#dig-sig-protocol">Sig Protocol</a>
+        <a href="#mac-encryption">MAC+Encryption</a>
+        <a href="#keyless-attack">Keyless Attack</a>
+        <a href="#iot-cps-security">IoT CPS Security</a>
+        <a href="#attack-surface">Attack Surface</a>
+        <a href="#kerckhoffs">Kerckhoffs'</a>
+        <a href="#vehicle-privacy">Vehicle Privacy</a>
+        <a href="#rsa-example">RSA Example</a>
+        <a href="#pairwise-vs-group">Pairwise vs Group</a>
+        <a href="#bt-vulns">BT Vulnerabilities</a>
         <a href="javascript:void(0)" class="test-mode-btn" id="testModeBtn" onclick="toggleTestMode()">🧪 Test Mode</a>
       </div>
     </div>
@@ -3488,16 +4448,403 @@
     <div class="ta-prev-text">Use <strong>constant-time algorithms</strong> that take the same amount of time regardless of input. For password comparison, always compare <strong>every character</strong> even if a mismatch is found early. Adding random delays can also help but is less reliable than true constant-time implementation.</div>
   </div>
 
+  <!-- Digital Signature Protocol Section -->
+  <hr class="divider"><span class="divider-label">New Topic</span>
+
+  <div class="dsp-header section-anchor" id="dig-sig-protocol">
+    <h2>Digital Signature Protocol</h2>
+  </div>
+
+  <div class="dsp-flow">
+    <div class="dsp-step">
+      <span class="dsp-num">01</span>
+      <div>
+        <div class="dsp-title">Key Generation</div>
+        <span>The signer generates a <strong>public/private key pair</strong>. The private key is kept secret, the public key is shared.</span>
+      </div>
+    </div>
+    <div class="dsp-step">
+      <span class="dsp-num">02</span>
+      <div>
+        <div class="dsp-title">Hashing</div>
+        <span>The original message is passed through a <strong>hash function</strong> (e.g. SHA-256) to produce a fixed-length digest. Signing a small hash is faster than signing the entire message.</span>
+      </div>
+    </div>
+    <div class="dsp-step">
+      <span class="dsp-num">03</span>
+      <div>
+        <div class="dsp-title">Signing</div>
+        <span>The signer <strong>encrypts the hash</strong> using their <strong>private key</strong>. This encrypted hash is the digital signature, attached to the original message.</span>
+      </div>
+    </div>
+    <div class="dsp-step">
+      <span class="dsp-num">04</span>
+      <div>
+        <div class="dsp-title">Transmission</div>
+        <span>The <strong>original message + digital signature</strong> are sent together to the receiver.</span>
+      </div>
+    </div>
+    <div class="dsp-step">
+      <span class="dsp-num">05</span>
+      <div>
+        <div class="dsp-title">Verification</div>
+        <span>The receiver <strong>decrypts the signature</strong> using the signer's public key to recover the hash. The receiver also independently hashes the received message. If <strong>both hashes match</strong>, the signature is valid.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAC+Encryption Modes Section -->
+  <hr class="divider"><span class="divider-label">New Topic</span>
+
+  <div class="macenc-header section-anchor" id="mac-encryption">
+    <h2>MAC + Encryption Modes</h2>
+  </div>
+
+  <div class="macenc-grid">
+    <div class="macenc-card etm">
+      <span class="macenc-badge">Most Secure</span>
+      <div>
+        <div class="macenc-name">Encrypt-then-MAC (EtM)</div>
+        <div class="macenc-flow">Plaintext <span class="arrow">→</span> Encrypt <span class="arrow">→</span> Ciphertext <span class="arrow">→</span> MAC</div>
+        <div class="macenc-desc">Plaintext is <strong>encrypted first</strong>, then a MAC is computed over the <strong>ciphertext</strong>. Receiver verifies MAC <strong>before decrypting</strong>. Tampered ciphertext is rejected before decryption even occurs.</div>
+        <div class="macenc-verdict">✓ Recommended approach</div>
+      </div>
+    </div>
+
+    <div class="macenc-card mte">
+      <span class="macenc-badge">Weaker</span>
+      <div>
+        <div class="macenc-name">MAC-then-Encrypt (MtE)</div>
+        <div class="macenc-flow">Plaintext <span class="arrow">→</span> MAC <span class="arrow">→</span> Encrypt(Plaintext + MAC)</div>
+        <div class="macenc-desc">MAC is computed over <strong>plaintext first</strong>, then both plaintext and MAC are <strong>encrypted together</strong>. Receiver must <strong>decrypt before verifying</strong> the MAC, processing potentially tampered ciphertext.</div>
+        <div class="macenc-verdict">⚠ Must decrypt before verifying</div>
+      </div>
+    </div>
+
+    <div class="macenc-card eam">
+      <span class="macenc-badge">Weakest</span>
+      <div>
+        <div class="macenc-name">Encrypt-and-MAC (E&M)</div>
+        <div class="macenc-flow">Plaintext <span class="arrow">→</span> Encrypt &amp; MAC(Plaintext) independently</div>
+        <div class="macenc-desc">Plaintext is encrypted and a MAC is computed over the <strong>plaintext independently</strong>. Both sent together. The MAC may <strong>leak information</strong> about the original message since it is computed on unencrypted data.</div>
+        <div class="macenc-verdict">✗ MAC may leak plaintext info</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Keyless Entry Attack Section -->
+  <hr class="divider"><span class="divider-label">New Topic</span>
+
+  <div class="kea-header section-anchor" id="keyless-attack">
+    <h2>Keyless Car Entry Attack</h2>
+  </div>
+
+  <div class="kea-attack">
+    <div class="kea-label">Relay Attack</div>
+    <div class="kea-steps">
+      <div class="kea-step">
+        <span class="kea-num">01</span>
+        <span><strong>Attacker A</strong> stands near the car with a relay device. <strong>Attacker B</strong> stands near the owner (key fob in pocket or home).</span>
+      </div>
+      <div class="kea-step">
+        <span class="kea-num">02</span>
+        <span>The relay devices <strong>amplify and forward</strong> the key fob's signal to the car, tricking it into thinking the fob is nearby.</span>
+      </div>
+      <div class="kea-step">
+        <span class="kea-num">03</span>
+        <span>The car <strong>unlocks and engine starts</strong> even though the actual key is far away.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Relay diagram -->
+  <div class="kea-diagram">
+    <div class="kea-entity">
+      <span class="kea-icon">🚗</span>
+      <span class="kea-name">Car</span>
+    </div>
+    <div class="kea-relay-link">
+      <span class="kea-signal">signal</span>
+      <span class="kea-arrow">⟵ ⟶</span>
+    </div>
+    <div class="kea-entity">
+      <span class="kea-icon">📡</span>
+      <span class="kea-name">Attacker A</span>
+    </div>
+    <div class="kea-relay-link">
+      <span class="kea-signal">relay</span>
+      <span class="kea-arrow">⟵ ⟶</span>
+    </div>
+    <div class="kea-entity">
+      <span class="kea-icon">📡</span>
+      <span class="kea-name">Attacker B</span>
+    </div>
+    <div class="kea-relay-link">
+      <span class="kea-signal">signal</span>
+      <span class="kea-arrow">⟵ ⟶</span>
+    </div>
+    <div class="kea-entity">
+      <span class="kea-icon">🔑</span>
+      <span class="kea-name">Key Fob</span>
+    </div>
+  </div>
+
+  <div class="kea-remedy">
+    <div class="kea-rem-label">Remedy</div>
+    <div class="kea-rem-text">Use a <strong>distance-bounding protocol</strong> that measures the round-trip time of the signal between car and key fob. Relay attacks add latency from the extra forwarding step, so the car detects the response took too long and <strong>rejects the unlock request</strong>. A simpler measure is storing the key fob in a <strong>Faraday pouch</strong> to block signals when not in use.</div>
+  </div>
+
+  <!-- IoT CPS Security Section -->
+  <hr class="divider"><span class="divider-label">New Topic</span>
+
+  <div class="iot-header section-anchor" id="iot-cps-security">
+    <h2>IoT-Enabled CPS Security</h2>
+    <p>security requirements across six properties</p>
+  </div>
+
+  <div class="iot-example">
+    <div class="iot-ex-label">Example System</div>
+    <div class="iot-ex-text"><span class="iot-hl">Smart Healthcare Patient Monitoring</span> — wearable sensors track vitals (heart rate, blood pressure, oxygen) and transmit data to hospital servers via the internet for <strong>real-time monitoring</strong> by doctors.</div>
+  </div>
+
+  <div class="iot-grid">
+    <div class="iot-card iot-conf">
+      <div class="iot-type">Confidentiality</div>
+      <div class="iot-desc">Patient health data must be <strong>encrypted during transmission and storage</strong> so only authorized medical staff can access it. A breach could expose sensitive medical records.</div>
+    </div>
+    <div class="iot-card iot-integ">
+      <div class="iot-type">Integrity</div>
+      <div class="iot-desc">Sensor readings must <strong>not be altered in transit</strong>. Tampered vital signs (e.g. modified heart rate) could lead to incorrect diagnosis or dangerous treatment decisions.</div>
+    </div>
+    <div class="iot-card iot-avail">
+      <div class="iot-type">Availability</div>
+      <div class="iot-desc">The system must be <strong>operational 24/7</strong>. Downtime or a DoS attack could mean critical changes in a patient's condition go undetected.</div>
+    </div>
+    <div class="iot-card iot-auth">
+      <div class="iot-type">Authenticity</div>
+      <div class="iot-desc">Commands to medical devices (e.g. adjusting insulin pump dosage) must be <strong>verified as coming from an authorized doctor</strong>, not a spoofed source.</div>
+    </div>
+    <div class="iot-card iot-nonrep">
+      <div class="iot-type">Non-Repudiation</div>
+      <div class="iot-desc">Every action (e.g. remotely adjusting medication) must be <strong>logged with proof of who issued it</strong>, so no party can deny their actions in case of malpractice.</div>
+    </div>
+    <div class="iot-card iot-priv">
+      <div class="iot-type">Privacy</div>
+      <div class="iot-desc">Must comply with regulations (e.g. <strong>HIPAA</strong>) ensuring patient data is only used for its intended purpose and not shared with unauthorized third parties without consent.</div>
+    </div>
+  </div>
+
+  <!-- Attack Surface Section -->
+  <hr class="divider"><span class="divider-label">New Topic</span>
+
+  <div class="asf-header section-anchor" id="attack-surface">
+    <h2>Attack Surface Identification</h2>
+  </div>
+
+  <div class="asf-grid">
+    <div class="asf-card">
+      <span class="asf-icon">📡</span>
+      <div>
+        <div class="asf-name">Network Scanning</div>
+        <div class="asf-def">Discover all connected devices, <strong>open ports</strong>, and running services on the network to find exposed entry points.</div>
+        <div class="asf-example">Scanning a smart factory network to find unprotected PLCs with open Telnet ports that could be exploited.</div>
+      </div>
+    </div>
+    <div class="asf-card">
+      <span class="asf-icon">🔬</span>
+      <div>
+        <div class="asf-name">Firmware Analysis</div>
+        <div class="asf-def">Extract and reverse-engineer device firmware to find <strong>hardcoded credentials</strong>, outdated libraries, or known vulnerabilities.</div>
+        <div class="asf-example">Extracting a smart thermostat's firmware and discovering default admin passwords that were never changed.</div>
+      </div>
+    </div>
+    <div class="asf-card">
+      <span class="asf-icon">🔗</span>
+      <div>
+        <div class="asf-name">Protocol Analysis</div>
+        <div class="asf-def">Examine communication protocols between devices for weaknesses like <strong>lack of encryption</strong> or weak authentication.</div>
+        <div class="asf-example">Sniffing Zigbee traffic in a smart home and finding that sensor data is transmitted in plaintext.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Kerckhoffs' Principle Section -->
+  <hr class="divider"><span class="divider-label">New Topic</span>
+
+  <div class="kp-header section-anchor" id="kerckhoffs">
+    <h2>Kerckhoffs' Principle</h2>
+  </div>
+
+  <div class="kp-card">
+    <div class="kp-label">Principle</div>
+    <div class="kp-text">A cryptographic system should remain secure even if <strong>everything about the system is publicly known</strong>, except for the <span class="kp-hl">secret key</span>. Security must depend <strong>solely on the secrecy of the key</strong>, not on the secrecy of the algorithm.</div>
+  </div>
+
+  <div class="kp-implication">
+    <div class="kp-box kp-public">
+      <div class="kp-box-label">Can Be Public</div>
+      <div class="kp-box-text">The algorithm, its design, source code, and implementation details. E.g. AES is published openly and peer-reviewed.</div>
+    </div>
+    <div class="kp-box kp-secret">
+      <div class="kp-box-label">Must Stay Secret</div>
+      <div class="kp-box-text">Only the key. Even if an attacker knows exactly which algorithm is used and how it works, they cannot break it without the key.</div>
+    </div>
+  </div>
+
+  <!-- Vehicle Privacy Section -->
+  <hr class="divider"><span class="divider-label">New Topic</span>
+
+  <div class="vp-header section-anchor" id="vehicle-privacy">
+    <h2>Semi-Autonomous Vehicle Privacy</h2>
+  </div>
+
+  <div class="vp-grid">
+    <div class="vp-card">
+      <span class="vp-icon">📍</span>
+      <div class="vp-name">Location Tracking</div>
+      <span class="vp-violation-label">Violation</span>
+      <div class="vp-desc">GPS and V2X communication data can be <strong>intercepted or collected</strong> by third parties, revealing the driver's daily routes, frequent destinations, and movement patterns.</div>
+      <span class="vp-remedy-label">Remedy</span>
+      <div class="vp-remedy">Use <strong>pseudonym certificates</strong> that periodically rotate the vehicle's identifier during V2X communication. The vehicle cycles through temporary pseudonyms so no entity can link all location data to one driver over time.</div>
+    </div>
+
+    <div class="vp-card">
+      <span class="vp-icon">🎥</span>
+      <div class="vp-name">In-Cabin Data Exposure</div>
+      <span class="vp-violation-label">Violation</span>
+      <div class="vp-desc">Cameras and microphones for driver monitoring (drowsiness detection, voice commands) can be <strong>accessed or leaked</strong>, exposing private conversations and behavior.</div>
+      <span class="vp-remedy-label">Remedy</span>
+      <div class="vp-remedy">Use <strong>homomorphic encryption</strong> to process sensor data in encrypted form. The monitoring system analyzes encrypted feeds without decrypting raw data, so even if intercepted, the actual footage remains unreadable.</div>
+    </div>
+  </div>
+
+  <!-- RSA Example Section -->
+  <hr class="divider"><span class="divider-label">New Topic</span>
+
+  <div class="rsa-header section-anchor" id="rsa-example">
+    <h2>RSA Worked Example</h2>
+    <p>p = 5, q = 7, plaintext M = 10</p>
+  </div>
+
+  <!-- Key Generation -->
+  <div class="rsa-phase-label">Key Generation</div>
+  <div class="rsa-steps">
+    <div class="rsa-step">
+      <span class="rsa-num">01</span>
+      <span>Choose primes: <strong>p = 5</strong>, <strong>q = 7</strong></span>
+    </div>
+    <div class="rsa-step">
+      <span class="rsa-num">02</span>
+      <span>Compute <strong>n = p × q = 35</strong></span>
+    </div>
+    <div class="rsa-step">
+      <span class="rsa-num">03</span>
+      <span>Compute Euler's totient: <strong>φ(n) = (p−1)(q−1) = 4 × 6 = 24</strong></span>
+    </div>
+    <div class="rsa-step">
+      <span class="rsa-num">04</span>
+      <span>Choose <strong>e</strong> such that 1 &lt; e &lt; 24 and gcd(e, 24) = 1. Pick <strong>e = 5</strong></span>
+    </div>
+    <div class="rsa-step">
+      <span class="rsa-num">05</span>
+      <span>Compute <strong>d</strong> such that d × e ≡ 1 (mod 24). <strong>d = 5</strong> (since 5 × 5 = 25, 25 mod 24 = 1)</span>
+    </div>
+  </div>
+
+  <div class="rsa-keys">
+    <div class="rsa-key-box pub">
+      <div class="rsa-key-label">Public Key</div>
+      <div class="rsa-key-val">(e, n) = (5, 35)</div>
+    </div>
+    <div class="rsa-key-box priv">
+      <div class="rsa-key-label">Private Key</div>
+      <div class="rsa-key-val">(d, n) = (5, 35)</div>
+    </div>
+  </div>
+
+  <!-- Encryption & Decryption -->
+  <div class="rsa-calc">
+    <div class="rsa-calc-box enc">
+      <div class="rsa-calc-label">Encryption (M = 10)</div>
+      <div class="rsa-calc-line">C = M^e mod n</div>
+      <div class="rsa-calc-line">C = 10^5 mod 35</div>
+      <div class="rsa-calc-line">C = 100000 mod 35</div>
+      <div class="rsa-calc-line">C = <span class="rsa-res">5</span></div>
+    </div>
+    <div class="rsa-calc-box dec">
+      <div class="rsa-calc-label">Decryption (C = 5)</div>
+      <div class="rsa-calc-line">M = C^d mod n</div>
+      <div class="rsa-calc-line">M = 5^5 mod 35</div>
+      <div class="rsa-calc-line">M = 3125 mod 35</div>
+      <div class="rsa-calc-line">M = <span class="rsa-res">10 ✓</span></div>
+    </div>
+  </div>
+
+  <!-- Pairwise vs Group Keying Section -->
+  <hr class="divider"><span class="divider-label">New Topic</span>
+
+  <div class="pgk-header section-anchor" id="pairwise-vs-group">
+    <h2><span class="pw-hl">Pairwise Keying</span> <span class="vs-hl">vs</span> <span class="gk-hl">Group Keying</span></h2>
+  </div>
+
+  <div class="pgk-row">
+    <div class="pgk-card pw">
+      <div class="pgk-label">Pairwise Keying</div>
+      <div class="pgk-row-item adv"><span class="adv-label">Advantage:</span> Compromising one node only exposes keys shared with that specific node. Rest of the network remains secure (<strong>strong resilience</strong>).</div>
+      <div class="pgk-row-item dis"><span class="dis-label">Disadvantage:</span> Each node must store <strong>n−1 keys</strong>, which is not scalable for resource-constrained sensors with limited memory.</div>
+    </div>
+
+    <div class="pgk-card gk">
+      <div class="pgk-label">Group Keying</div>
+      <div class="pgk-row-item adv"><span class="adv-label">Advantage:</span> Each node stores only <strong>one key</strong> regardless of network size, making it highly <strong>memory-efficient and scalable</strong>.</div>
+      <div class="pgk-row-item dis"><span class="dis-label">Disadvantage:</span> Compromising any single node exposes the group key, allowing the attacker to <strong>eavesdrop on all communication</strong> in that group (<strong>weak resilience</strong>).</div>
+    </div>
+  </div>
+
+  <!-- Bluetooth Vulnerabilities Section -->
+  <hr class="divider"><span class="divider-label">New Topic</span>
+
+  <div class="btv-header section-anchor" id="bt-vulns">
+    <h2>Bluetooth Vulnerabilities</h2>
+  </div>
+
+  <div class="btv-grid">
+    <div class="btv-card">
+      <span class="btv-icon">💬</span>
+      <div>
+        <div class="btv-name">Bluejacking</div>
+        <div class="btv-desc">Attacker sends <strong>unsolicited messages</strong> to nearby devices via OBEX push. Mostly harmless but can be used for <strong>phishing or social engineering</strong>.</div>
+        <div class="btv-fix"><span class="btv-fix-label">Prevention:</span> <strong>Disable Bluetooth discoverability</strong> when not in use.</div>
+      </div>
+    </div>
+    <div class="btv-card">
+      <span class="btv-icon">📂</span>
+      <div>
+        <div class="btv-name">Bluesnarfing</div>
+        <div class="btv-desc">Attacker exploits OBEX vulnerability to gain <strong>unauthorized access to data</strong> (contacts, messages, calendars) without the owner's knowledge.</div>
+        <div class="btv-fix"><span class="btv-fix-label">Prevention:</span> Keep <strong>firmware updated</strong> and use <strong>strong authentication</strong> before allowing any data transfer.</div>
+      </div>
+    </div>
+    <div class="btv-card">
+      <span class="btv-icon">🎛️</span>
+      <div>
+        <div class="btv-name">Bluebugging</div>
+        <div class="btv-desc">Attacker takes <strong>full control of a device</strong> by exploiting flaws in the pairing process, allowing them to make calls, send messages, and access the internet.</div>
+        <div class="btv-fix"><span class="btv-fix-label">Prevention:</span> Use <strong>Secure Simple Pairing (SSP)</strong> with strong mutual authentication and keep devices on the <strong>latest Bluetooth version</strong>.</div>
+      </div>
+    </div>
+  </div>
+
   <div class="footer">expandable cheat sheet &middot; more topics coming</div>
 
 </div>
 
 <!-- Score Bar -->
 <div class="score-bar" id="scoreBar">
-  <span class="score-item total" id="scoreTotal">0/18 answered</span>
+  <span class="score-item total" id="scoreTotal">0/28 answered</span>
   <span class="score-item right" id="scoreRight">✓ 0</span>
   <span class="score-item wrong-score" id="scoreWrong">✗ 0</span>
-  <span class="score-item pending" id="scorePending">… 18 left</span>
+  <span class="score-item pending" id="scorePending">… 28 left</span>
   <button class="reset-btn" onclick="resetTest()">Reset</button>
 </div>
 
@@ -3520,7 +4867,17 @@ const topics = [
   { id: 'mealy-fsm', question: 'Design the Mealy FSM for the smart air purifier. Define states, transitions for inputs 00/01/10/11, and output logic.' },
   { id: 'hsm', question: 'Compare the 4 types of HSMs (Network, PCIe, USB, Cloud) with an advantage and disadvantage for each.' },
   { id: 'wep-vs-wpa', question: 'Compare WEP and WPA/WPA2 in terms of encryption method and key distribution.' },
-  { id: 'timing-attack', question: 'Explain how a timing attack works and how it can be prevented.' }
+  { id: 'timing-attack', question: 'Explain how a timing attack works and how it can be prevented.' },
+  { id: 'dig-sig-protocol', question: 'Describe the 5 steps of the digital signature protocol: key generation, hashing, signing, transmission, and verification.' },
+  { id: 'mac-encryption', question: 'Explain the 3 approaches to combining MAC and encryption (EtM, MtE, E&M). Which is most secure and why?' },
+  { id: 'keyless-attack', question: 'How does a relay attack work on keyless car entry systems? What is the remedy using a distance-bounding protocol?' },
+  { id: 'iot-cps-security', question: 'Give an example of an IoT-enabled CPS and explain its security requirements for: Confidentiality, Integrity, Availability, Authenticity, Non-Repudiation, and Privacy.' },
+  { id: 'attack-surface', question: 'Explain 3 attack surface identification techniques for CPS/IoT systems with an example for each.' },
+  { id: 'kerckhoffs', question: 'What is Kerckhoffs\' Principle? What can be public and what must stay secret in a cryptographic system?' },
+  { id: 'vehicle-privacy', question: 'Give two examples of privacy violations in a semi-autonomous vehicle and explain how each can be remedied using a cryptographic primitive.' },
+  { id: 'rsa-example', question: 'Given primes p=5 and q=7, demonstrate RSA key generation (compute n, φ(n), choose e, find d), then encrypt M=10 and decrypt the result.' },
+  { id: 'pairwise-vs-group', question: 'Compare pairwise keying and group keying in WSN key predistribution. Give the advantage and disadvantage of each.' },
+  { id: 'bt-vulns', question: 'Name 3 Bluetooth vulnerabilities (Bluejacking, Bluesnarfing, Bluebugging), explain what each does, and how to prevent them.' }
 ];
 
 let testMode = false;
